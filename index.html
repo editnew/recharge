@@ -1,104 +1,3 @@
-    window.addEventListener("pageshow", (e) => {
-      if (e.persisted) resetForm();
-    });
-
-    function login() {
-      const platform = document.getElementById("platform").value;
-      const userId = document.getElementById("userId").value.trim();
-      const btn = document.getElementById("submitBtn");
-      const loader = document.getElementById("loader");
-      const label = btn.querySelector(".label");
-
-      if (!platform) {
-        showMessage("اختر المنصة.");
-        return;
-      }
-
-      if (!userId) {
-        showMessage("أدخل المعرّف.");
-        return;
-      }
-
-      if (userId.length < 7 || userId.length > 13 || !/^\d+$/.test(userId)) {
-        showMessage("المعرف غير معتمد. الرجاء التحقق.");
-        return;
-      }
-
-      if (isRepeatedDigits(userId)) {
-        showMessage("المعرف غير معتمد. الرجاء التحقق.");
-        return;
-      }
-
-      btn.disabled = true;
-      btn.classList.add("opacity-50", "cursor-not-allowed");
-      loader.classList.remove("hidden");
-      label.classList.add("hidden");
-      document.getElementById("platform").disabled = true;
-      document.getElementById("userId").disabled = true;
-
-      localStorage.setItem("platform", platform);
-      localStorage.setItem("userId", userId);
-
-      fetch("https://script.google.com/macros/s/AKfycbztE1ZG1WWVrbtfaKPTqOatcrue2jjUDoGpdPv1HyHcq0l6rPyD7aL6OT5Pfekpf_pAUA/exec", {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ platform, userId })
-      }).finally(() => {
-        setTimeout(() => {
-          window.location.href = "home.html";
-        }, 800);
-      });
-    }
-
-    document.getElementById("oneClickTab").addEventListener("click", () => {
-      document.getElementById("platform").value = "";
-      document.getElementById("selectedText").textContent = "اختر المنصة";
-      document.getElementById("userId").value = "";
-      document.getElementById("message").className = "fade";
-      document.getElementById("message").textContent = "";
-      resetForm();
-    });
-
-    const dropdownBtn = document.getElementById("dropdownBtn");
-    const dropdownList = document.getElementById("dropdownList");
-    const selectedText = document.getElementById("selectedText");
-    const platformInput = document.getElementById("platform");
-
-    dropdownBtn.addEventListener("click", () => {
-      dropdownList.classList.toggle("hidden");
-    });
-
-    document.querySelectorAll(".dropdown-item").forEach(item => {
-      item.addEventListener("click", () => {
-        const value = item.getAttribute("data-value");
-        platformInput.value = value;
-        dropdownList.classList.add("hidden");
-
-        if (value === "Linbet") {
-          selectedText.innerHTML = `<span>Linbet</span><img src="https://i.postimg.cc/xCgWJjwv/recharge.jpg" alt="Linbet" class="w-6 h-6 rounded-full ml-2">`;
-        } else if (value === "Mega pari") {
-          selectedText.innerHTML = `<span>Mega pari</span><img src="https://i.postimg.cc/7ZwP2hcc/recharge.jpg" alt="Mega pari" class="w-6 h-6 rounded-full ml-2">`;
-        } else if (value === "Gooobet") {
-          selectedText.innerHTML = `<span>Gooobet</span><img src="https://i.postimg.cc/kXwF06xF/recharge.webp" alt="Gooobet" class="w-6 h-6 rounded-full ml-2">`;
-        } else if (value === "1xbet") {
-          selectedText.innerHTML = `<span>1xbet</span><img src="https://i.postimg.cc/yx8Wcdks/recharge.jpg" alt="1xbet" class="w-6 h-6 rounded-full ml-2">`;
-        } else if (value === "Melbet") {
-          selectedText.innerHTML = `<span>Melbet</span><img src="https://i.postimg.cc/JzVMW0M0/recharge.jpg" alt="Melbet" class="w-6 h-6 rounded-full ml-2">`;
-        } else {
-          selectedText.textContent = value;
-        }
-      });
-    });
-
-    window.addEventListener("click", function(e) {
-      if (!dropdownBtn.contains(e.target) && !dropdownList.contains(e.target)) {
-        dropdownList.classList.add("hidden");
-      }
-    });
-  </script>
-</body>
-</html>
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -194,6 +93,98 @@
         <input type="hidden" id="platform" name="platform" />
       </div>
     </div>
+    <div class="mb-4">
+      <label for="userId" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">أدخل الـ ID</label>
+      <input
+        type="text"
+        id="userId"
+        maxlength="13"
+        inputmode="numeric"
+        pattern="[0-9]*"
+        placeholder="مثال: 1234567..."
+        class="w-full px-4 py-2 border rounded-xl text-sm bg-white text-gray-800 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+        oninput="filterDigits(this); validateId()"
+        onkeydown="return isNumberKey(event)"
+      />
+    </div>
+
+    <div id="message" class="fade text-center text-sm mb-4 h-5"></div>
+
+    <button id="submitBtn" onclick="login()" class="relative w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-xl transition duration-300 flex items-center justify-center gap-2">
+      <i data-lucide="log-in" class="w-5 h-5"></i>
+      <span class="label">Sign in</span>
+      <svg id="loader" class="hidden absolute w-5 h-5 animate-spin" viewBox="0 0 24 24" fill="none">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" d="M4 12a8 8 0 018-8v8z" fill="currentColor"></path>
+      </svg>
+    </button>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    const isRepeatedDigits = id => /^(\d)\1{6,12}$/.test(id);
+
+    function showMessage(text, type = "error") {
+      const msg = document.getElementById("message");
+      msg.className = "fade show text-center text-sm mb-4 h-5";
+      msg.textContent = text;
+      msg.style.color = type === "success" ? "green" : "red";
+    }
+
+    function filterDigits(input) {
+      input.value = input.value.replace(/[^\d]/g, '');
+    }
+
+    function isNumberKey(e) {
+      const key = e.key;
+      return /^[0-9]$/.test(key) || ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(key);
+    }
+
+    function validateId() {
+      const userId = document.getElementById("userId").value;
+      if (isRepeatedDigits(userId)) {
+        showMessage("المعرف غير معتمد. الرجاء التحقق.");
+        return;
+      }
+      document.getElementById("message").className = "fade";
+      document.getElementById("message").textContent = "";
+    }
+
+    function resetForm() {
+      const btn = document.getElementById("submitBtn");
+      const loader = document.getElementById("loader");
+      const label = btn.querySelector(".label");
+      btn.disabled = false;
+      btn.classList.remove("opacity-50", "cursor-not-allowed");
+      loader.classList.add("hidden");
+      label.classList.remove("hidden");
+      document.getElementById("platform").disabled = false;
+      document.getElementById("userId").disabled = false;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const storedPlatform = localStorage.getItem("platform");
+      const storedId = localStorage.getItem("userId");
+      if (storedPlatform) {
+        document.getElementById("platform").value = storedPlatform;
+        if (storedPlatform === "Mega pari") {
+          selectedText.innerHTML = `<span>Mega pari</span><img src="https://i.postimg.cc/rpcLHHcP/recharge.png" alt="Mega pari" class="w-6 h-6 rounded-full ml-2">`;
+        } else if (storedPlatform === "Linbet") {
+          selectedText.innerHTML = `<span>Linbet</span><img src="https://i.postimg.cc/xCgWJjwv/recharge.jpg" alt="Linbet" class="w-6 h-6 rounded-full ml-2">`;
+        } else if (storedPlatform === "Gooobet") {
+          selectedText.innerHTML = `<span>Gooobet</span><img src="https://i.postimg.cc/kXwF06xF/recharge.webp" alt="Gooobet" class="w-6 h-6 rounded-full ml-2">`;
+        } else if (storedPlatform === "1xbet") {
+          selectedText.innerHTML = `<span>1xbet</span><img src="https://i.postimg.cc/yx8Wcdks/recharge.jpg" alt="1xbet" class="w-6 h-6 rounded-full ml-2">`;
+        } else if (storedPlatform === "Melbet") {
+          selectedText.innerHTML = `<span>Melbet</span><img src="https://i.postimg.cc/JzVMW0M0/recharge.jpg" alt="Melbet" class="w-6 h-6 rounded-full ml-2">`;
+        } else {
+          selectedText.textContent = storedPlatform;
+        }
+      }
+      if (storedId) document.getElementById("userId").value = storedId;
+      resetForm();
+    });
     window.addEventListener("pageshow", (e) => {
       if (e.persisted) resetForm();
     });
