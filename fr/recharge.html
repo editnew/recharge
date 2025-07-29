@@ -247,13 +247,14 @@
     const storedPlatform = localStorage.getItem("platform");
     const storedId = localStorage.getItem("userId");
     if (storedPlatform) {
-      document.getElementById("platform").value = storedPlatform;
       const item = [...document.querySelectorAll(".dropdown-item")].find(i => i.dataset.value === storedPlatform);
       if (item) {
+        platformInput.value = storedPlatform;
         const img = item.querySelector("img").outerHTML;
         selectedText.innerHTML = `<span>${storedPlatform}</span>${img}`;
       } else {
-        selectedText.textContent = storedPlatform;
+        platformInput.value = "";
+        selectedText.textContent = "اختر المنصة";
       }
     }
     if (storedId) document.getElementById("userId").value = storedId;
