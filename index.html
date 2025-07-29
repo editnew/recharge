@@ -98,15 +98,6 @@
     window.addEventListener('contextmenu', function (e) {
       e.preventDefault();
     });
-
-    setInterval(function() {
-      const devtools = /./;
-      devtools.toString = function() {
-        document.body.innerHTML = '';
-        window.location.href = "about:blank";
-      };
-      console.log('%c', devtools);
-    }, 2000);
   </script>
 </body>
 </html>
