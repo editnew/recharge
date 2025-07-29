@@ -5,58 +5,102 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Mobcash Intro</title>
   <style>
+    :root {
+      --green: #4caf50;
+      --green-dark: #76ff03;
+      --bg-light: #ffffff;
+      --bg-dark: #121212;
+      --text-light: #000000;
+      --text-dark: #ffffff;
+    }
+
     body {
       margin: 0;
+      padding: 0;
       font-family: 'Tahoma', sans-serif;
-      background-color: #fff;
-      color: #000;
+      background-color: var(--bg-light);
+      color: var(--text-light);
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       flex-direction: column;
-      transition: background 0.3s, color 0.3s;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeIn 1.2s ease forwards;
+      transition: background 0.4s, color 0.4s;
+      text-align: center;
     }
 
     h1 {
-      font-size: 24px;
-      margin-bottom: 20px;
+      font-size: 26px;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeIn 1.5s ease forwards;
+      animation-delay: 0.8s;
     }
 
     .loader {
-      border: 4px solid #f3f3f3;
-      border-top: 4px solid #4caf50;
+      width: 50px;
+      height: 50px;
+      border: 5px solid rgba(0, 0, 0, 0.1);
+      border-top: 5px solid var(--green);
       border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 1s linear infinite;
+      animation: spin 1s ease-in-out infinite, pulse 1.4s ease-in-out infinite;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
     }
 
     @keyframes spin {
-      to { transform: rotate(360deg); }
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
-    /* دعم الوضع الداكن */
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     @media (prefers-color-scheme: dark) {
       body {
-        background-color: #121212;
-        color: #ffffff;
+        background-color: var(--bg-dark);
+        color: var(--text-dark);
       }
-
+      .subtitle {
+        color: #aaa;
+      }
       .loader {
-        border: 4px solid #333;
-        border-top: 4px solid #76ff03;
+        border-color: rgba(255, 255, 255, 0.1);
+        border-top-color: var(--green-dark);
+        box-shadow: 0 0 10px rgba(255,255,255,0.1);
       }
     }
   </style>
 </head>
 <body>
   <h1>Mobcash Services</h1>
+  <p class="subtitle">مرحبًا بك في خدمات Mobcash – الرجاء الانتظار...</p>
   <div class="loader"></div>
 
   <script>
     setTimeout(() => {
-      window.location.href = "tachjil.html";
+      document.body.style.transition = 'opacity 0.5s ease';
+      document.body.style.opacity = 0;
+      setTimeout(() => {
+        window.location.href = "tachjil.html";
+      }, 500);
     }, 3000);
   </script>
 </body>
