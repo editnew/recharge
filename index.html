@@ -1,52 +1,64 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mobcash | تحميل</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mobcash | جاري التحميل</title>
   <style>
     :root {
       --primary-color: #00e676;
-      --bg-dark: #0d0d0d;
-      --text-dark: #fff;
+      --text-light: #111111;
+      --text-dark: #ffffff;
+      --bg-light: #f2f2f2;
+      --bg-dark: #0e0e0e;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
     body {
-      margin: 0;
-      padding: 0;
       font-family: 'Segoe UI', Tahoma, sans-serif;
-      background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
-      color: var(--text-dark);
+      height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
       text-align: center;
-      transition: all 0.4s ease;
+      padding: 20px;
+      background-color: var(--bg-light);
+      color: var(--text-light);
+      opacity: 0;
+      animation: fadeIn 1s ease forwards;
+      transition: background 0.4s, color 0.4s;
     }
 
     h1 {
-      font-size: 24px;
+      font-size: 26px;
       font-weight: 600;
-      margin-bottom: 25px;
+      margin-bottom: 12px;
     }
 
-    h1 span {
-      color: var(--primary-color);
-      font-weight: 700;
+    .subtitle {
+      font-size: 15px;
+      color: #666;
+      margin-bottom: 30px;
+      animation: fadeIn 1.5s ease forwards;
+      animation-delay: 0.5s;
+      opacity: 0;
     }
 
-    /* ✅ النقاط المتحركة */
     .dots-loader {
       display: flex;
       gap: 8px;
-      margin-bottom: 20px;
+      margin-top: 10px;
     }
 
     .dot {
-      width: 12px;
-      height: 12px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
       background-color: var(--primary-color);
       opacity: 0.3;
@@ -54,77 +66,67 @@
     }
 
     .dot:nth-child(1) { animation-delay: 0s; }
-    .dot:nth-child(2) { animation-delay: 0.15s; }
-    .dot:nth-child(3) { animation-delay: 0.3s; }
-    .dot:nth-child(4) { animation-delay: 0.45s; }
-    .dot:nth-child(5) { animation-delay: 0.6s; }
+    .dot:nth-child(2) { animation-delay: 0.2s; }
+    .dot:nth-child(3) { animation-delay: 0.4s; }
 
     @keyframes pulse {
       0%, 100% { opacity: 0.2; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.4); }
+      50% { opacity: 1; transform: scale(1.5); }
     }
 
-    .progress-text {
-      font-size: 15px;
-      margin-bottom: 10px;
-      color: #ccc;
+    @keyframes fadeIn {
+      to { opacity: 1; }
     }
 
-    .progress-bar {
-      width: 200px;
-      height: 4px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 2px;
-      overflow: hidden;
-    }
+    /* الوضع الداكن تلقائي */
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: var(--bg-dark);
+        color: var(--text-dark);
+      }
 
-    .fill {
-      width: 0%;
-      height: 100%;
-      background: var(--primary-color);
-      animation: loadBar 3.5s ease forwards;
-    }
+      .subtitle {
+        color: #aaa;
+      }
 
-    @keyframes loadBar {
-      to { width: 100%; }
+      .dot {
+        background-color: var(--primary-color);
+      }
     }
 
     @media (max-width: 480px) {
-      h1 { font-size: 20px; }
-      .progress-bar { width: 160px; }
-      .dot { width: 10px; height: 10px; }
+      h1 {
+        font-size: 22px;
+      }
+
+      .subtitle {
+        font-size: 14px;
+      }
+
+      .dot {
+        width: 8px;
+        height: 8px;
+      }
     }
   </style>
 </head>
 <body>
-  <h1><span>Mobcash</span> يقوم بتهيئة حسابك...</h1>
-
+  <h1>مرحبًا بك في Mobcash</h1>
+  <p class="subtitle">جارٍ تحميل النظام، الرجاء الانتظار...</p>
   <div class="dots-loader">
-    <div class="dot"></div>
-    <div class="dot"></div>
     <div class="dot"></div>
     <div class="dot"></div>
     <div class="dot"></div>
   </div>
 
-  <p class="progress-text">جارٍ التحميل: <span id="percent">0%</span></p>
-  <div class="progress-bar"><div class="fill"></div></div>
-
   <script>
-    let i = 0;
-    const percent = document.getElementById("percent");
-    const interval = setInterval(() => {
-      i += 2;
-      if (i >= 100) {
-        i = 100;
-        clearInterval(interval);
-      }
-      percent.textContent = i + "%";
-    }, 70);
-
     setTimeout(() => {
-      window.location.href = "tachjil.html";
-    }, 3700);
+      document.body.style.opacity = '0';
+      document.body.style.transition = 'opacity 0.5s ease';
+      setTimeout(() => {
+        window.location.href = "tachjil.html";
+      }, 500);
+    }, 3500);
   </script>
 </body>
 </html>
