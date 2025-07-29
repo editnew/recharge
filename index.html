@@ -1,116 +1,88 @@
 <!DOCTYPE html>
-<html lang="en" dir="rtl">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>Mobcash | Intro</title>
+  <title>Mobcash Intro</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    :root {
+      --bg-light: #f2f2f2;
+      --bg-dark: #121212;
+      --dot-color: #555;
+      --active-color: #fff;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: var(--bg-dark);
+      }
+    }
+
+    @media (prefers-color-scheme: light) {
+      body {
+        background-color: var(--bg-light);
+      }
     }
 
     body {
-      background-color: #003c2f;
-      color: white;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
       height: 100vh;
       display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      text-align: center;
-      padding: 30px 20px;
-    }
-
-    .title {
-      font-size: 48px;
-      font-weight: bold;
-      margin-top: 100px;
-    }
-
-    .svg-icon-main {
-      margin-top: 20px;
-      width: 60px;
-      height: 60px;
-      fill: white;
-    }
-
-    .loader {
-      display: flex;
-      gap: 10px;
-      margin: 30px 0;
       justify-content: center;
+      align-items: center;
     }
 
-    .icon-dot {
+    .loader-container {
+      display: flex;
+      gap: 12px;
+    }
+
+    .dot {
+      width: 14px;
+      height: 14px;
+      background-color: var(--dot-color);
+      border-radius: 50%;
+      position: relative;
+    }
+
+    .dot svg {
+      position: absolute;
+      top: -6px;
+      left: -6px;
       width: 26px;
       height: 26px;
-      fill: white;
-      opacity: 0.3;
-      animation: pulse 1.4s infinite ease-in-out;
+      fill: var(--active-color);
+      animation: move 1.6s linear infinite;
+      opacity: 0;
     }
 
-    .icon-dot:nth-child(1) { animation-delay: 0s; }
-    .icon-dot:nth-child(2) { animation-delay: 0.15s; }
-    .icon-dot:nth-child(3) { animation-delay: 0.3s; }
-    .icon-dot:nth-child(4) { animation-delay: 0.45s; }
-    .icon-dot:nth-child(5) { animation-delay: 0.6s; }
-    .icon-dot:nth-child(6) { animation-delay: 0.75s; }
-    .icon-dot:nth-child(7) { animation-delay: 0.9s; }
+    /* Delay each icon */
+    .dot:nth-child(1) svg { animation-delay: 0s; }
+    .dot:nth-child(2) svg { animation-delay: 0.2s; }
+    .dot:nth-child(3) svg { animation-delay: 0.4s; }
+    .dot:nth-child(4) svg { animation-delay: 0.6s; }
+    .dot:nth-child(5) svg { animation-delay: 0.8s; }
+    .dot:nth-child(6) svg { animation-delay: 1s; }
+    .dot:nth-child(7) svg { animation-delay: 1.2s; }
+    .dot:nth-child(8) svg { animation-delay: 1.4s; }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 0.3; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.4); }
-    }
-
-    .bottom {
-      display: flex;
-      width: 100%;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 12px;
-      opacity: 0.8;
-    }
-
-    .logo-small {
-      width: 40px;
-      height: auto;
-    }
-
-    .version {
-      margin-left: auto;
+    @keyframes move {
+      0% { opacity: 0; transform: scale(0.5); }
+      30% { opacity: 1; transform: scale(1); }
+      70% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0; transform: scale(0.5); }
     }
   </style>
 </head>
 <body>
-
-  <div class="title">MOBCASH</div>
-
-  <!-- الشعار الكبير -->
-  <svg class="svg-icon-main" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
-    <path d="M10 11L4 5c-2 3-4 7-4 10 4 0 7-1 10-4zM11 10c3-3 4-6 4-10-3 0-7 2-10 4zM16 6l-3 5 3 4L27 4c-3-2-6-4-10-4l-1 6zM32 15c0-4-2-7-4-10L17 16l4 3a17 17 0 0111-4zM22 21l6 6c2-3 4-7 4-10-4 0-7 1-10 4zM21 22c-3 3-4 6-4 10 3 0 7-2 10-4zM15 16l-4-3a17 17 0 01-11 4c0 4 2 7 4 10zM16 26l3-5-3-4L5 28c3 2 6 4 10 4l1-6z"></path>
-  </svg>
-
-  <!-- الأيقونات المتحركة -->
-  <div class="loader">
-    <!-- كرر SVG الأيقونة مع نبض -->
-    <svg class="icon-dot" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
-      <path d="M10 11L4 5c-2 3-4 7-4 10 4 0 7-1 10-4zM11 10c3-3 4-6 4-10-3 0-7 2-10 4zM16 6l-3 5 3 4L27 4c-3-2-6-4-10-4l-1 6zM32 15c0-4-2-7-4-10L17 16l4 3a17 17 0 0111-4zM22 21l6 6c2-3 4-7 4-10-4 0-7 1-10 4zM21 22c-3 3-4 6-4 10 3 0 7-2 10-4zM15 16l-4-3a17 17 0 01-11 4c0 4 2 7 4 10zM16 26l3-5-3-4L5 28c3 2 6 4 10 4l1-6z"></path>
-    </svg>
-    <!-- ×6 إضافات متتالية -->
-    <svg class="icon-dot" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg"><path d="M10 11L4 5c-2 3-4 7-4 10 4 0 7-1 10-4zM11 10c3-3 4-6 4-10-3 0-7 2-10 4zM16 6l-3 5 3 4L27 4c-3-2-6-4-10-4l-1 6zM32 15c0-4-2-7-4-10L17 16l4 3a17 17 0 0111-4zM22 21l6 6c2-3 4-7 4-10-4 0-7 1-10 4zM21 22c-3 3-4 6-4 10 3 0 7-2 10-4zM15 16l-4-3a17 17 0 01-11 4c0 4 2 7 4 10zM16 26l3-5-3-4L5 28c3 2 6 4 10 4l1-6z"/></svg>
-    <svg class="icon-dot" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg"><path d="M10 11L4 5c-2 3-4 7-4 10 4 0 7-1 10-4zM11 10c3-3 4-6 4-10-3 0-7 2-10 4zM16 6l-3 5 3 4L27 4c-3-2-6-4-10-4l-1 6zM32 15c0-4-2-7-4-10L17 16l4 3a17 17 0 0111-4zM22 21l6 6c2-3 4-7 4-10-4 0-7 1-10 4zM21 22c-3 3-4 6-4 10 3 0 7-2 10-4zM15 16l-4-3a17 17 0 01-11 4c0 4 2 7 4 10zM16 26l3-5-3-4L5 28c3 2 6 4 10 4l1-6z"/></svg>
-    <svg class="icon-dot" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg"><path d="M10 11L4 5c-2 3-4 7-4 10 4 0 7-1 10-4zM11 10c3-3 4-6 4-10-3 0-7 2-10 4zM16 6l-3 5 3 4L27 4c-3-2-6-4-10-4l-1 6zM32 15c0-4-2-7-4-10L17 16l4 3a17 17 0 0111-4zM22 21l6 6c2-3 4-7 4-10-4 0-7 1-10 4zM21 22c-3 3-4 6-4 10 3 0 7-2 10-4zM15 16l-4-3a17 17 0 01-11 4c0 4 2 7 4 10zM16 26l3-5-3-4L5 28c3 2 6 4 10 4l1-6z"/></svg>
-    <svg class="icon-dot" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg"><path d="M10 11L4 5c-2 3-4 7-4 10 4 0 7-1 10-4zM11 10c3-3 4-6 4-10-3 0-7 2-10 4zM16 6l-3 5 3 4L27 4c-3-2-6-4-10-4l-1 6zM32 15c0-4-2-7-4-10L17 16l4 3a17 17 0 0111-4zM22 21l6 6c2-3 4-7 4-10-4 0-7 1-10 4zM21 22c-3 3-4 6-4 10 3 0 7-2 10-4zM15 16l-4-3a17 17 0 01-11 4c0 4 2 7 4 10zM16 26l3-5-3-4L5 28c3 2 6 4 10 4l1-6z"/></svg>
-    <svg class="icon-dot" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg"><path d="M10 11L4 5c-2 3-4 7-4 10 4 0 7-1 10-4zM11 10c3-3 4-6 4-10-3 0-7 2-10 4zM16 6l-3 5 3 4L27 4c-3-2-6-4-10-4l-1 6zM32 15c0-4-2-7-4-10L17 16l4 3a17 17 0 0111-4zM22 21l6 6c2-3 4-7 4-10-4 0-7 1-10 4zM21 22c-3 3-4 6-4 10 3 0 7-2 10-4zM15 16l-4-3a17 17 0 01-11 4c0 4 2 7 4 10zM16 26l3-5-3-4L5 28c3 2 6 4 10 4l1-6z"/></svg>
+  <div class="loader-container">
+    <div class="dot"><svg viewBox="0 0 36 36"><path d="M10 11L4 5c-2 3-4 7-4 10 4 0 7-1 10-4zM11 10c3-3 4-6 4-10-3 0-7 2-10 4zM16 6l-3 5 3 4L27 4c-3-2-6-4-10-4l-1 6zM32 15c0-4-2-7-4-10L17 16l4 3a17 17 0 0111-4zM22 21l6 6c2-3 4-7 4-10-4 0-7 1-10 4zM21 22c-3 3-4 6-4 10 3 0 7-2 10-4zM15 16l-4-3a17 17 0 01-11 4c0 4 2 7 4 10zM16 26l3-5-3-4L5 28c3 2 6 4 10 4l1-6z"/></svg></div>
+    <div class="dot"><svg viewBox="0 0 36 36"><path d="M10 11L4 5c-2 3-4 7-4 10 4 0 7-1 10-4zM11 10c3-3 4-6 4-10-3 0-7 2-10 4zM16 6l-3 5 3 4L27 4c-3-2-6-4-10-4l-1 6zM32 15c0-4-2-7-4-10L17 16l4 3a17 17 0 0111-4zM22 21l6 6c2-3 4-7 4-10-4 0-7 1-10 4zM21 22c-3 3-4 6-4 10 3 0 7-2 10-4zM15 16l-4-3a17 17 0 01-11 4c0 4 2 7 4 10zM16 26l3-5-3-4L5 28c3 2 6 4 10 4l1-6z"/></svg></div>
+    <div class="dot"><svg viewBox="0 0 36 36"><path d="M10 11L4 5c-2 3-4 7-4 10 4 0 7-1 10-4zM11 10c3-3 4-6 4-10-3 0-7 2-10 4zM16 6l-3 5 3 4L27 4c-3-2-6-4-10-4l-1 6zM32 15c0-4-2-7-4-10L17 16l4 3a17 17 0 0111-4zM22 21l6 6c2-3 4-7 4-10-4 0-7 1-10 4zM21 22c-3 3-4 6-4 10 3 0 7-2 10-4zM15 16l-4-3a17 17 0 01-11 4c0 4 2 7 4 10zM16 26l3-5-3-4L5 28c3 2 6 4 10 4l1-6z"/></svg></div>
+    <div class="dot"><svg viewBox="0 0 36 36"><path d="M10 11L4 5c-2 3-4 7-4 10 4 0 7-1 10-4zM11 10c3-3 4-6 4-10-3 0-7 2-10 4zM16 6l-3 5 3 4L27 4c-3-2-6-4-10-4l-1 6zM32 15c0-4-2-7-4-10L17 16l4 3a17 17 0 0111-4zM22 21l6 6c2-3 4-7 4-10-4 0-7 1-10 4zM21 22c-3 3-4 6-4 10 3 0 7-2 10-4zM15 16l-4-3a17 17 0 01-11 4c0 4 2 7 4 10zM16 26l3-5-3-4L5 28c3 2 6 4 10 4l1-6z"/></svg></div>
+    <div class="dot"><svg viewBox="0 0 36 36"><path d="M10 11L4 5c-2 3-4 7-4 10 4 0 7-1 10-4zM11 10c3-3 4-6 4-10-3 0-7 2-10 4zM16 6l-3 5 3 4L27 4c-3-2-6-4-10-4l-1 6zM32 15c0-4-2-7-4-10L17 16l4 3a17 17 0 0111-4zM22 21l6 6c2-3 4-7 4-10-4 0-7 1-10 4zM21 22c-3 3-4 6-4 10 3 0 7-2 10-4zM15 16l-4-3a17 17 0 01-11 4c0 4 2 7 4 10zM16 26l3-5-3-4L5 28c3 2 6 4 10 4l1-6z"/></svg></div>
+    <div class="dot"><svg viewBox="0 0 36 36"><path d="M10 11L4 5c-2 3-4 7-4 10 4 0 7-1 10-4zM11 10c3-3 4-6 4-10-3 0-7 2-10 4zM16 6l-3 5 3 4L27 4c-3-2-6-4-10-4l-1 6zM32 15c0-4-2-7-4-10L17 16l4 3a17 17 0 0111-4zM22 21l6 6c2-3 4-7 4-10-4 0-7 1-10 4zM21 22c-3 3-4 6-4 10 3 0 7-2 10-4zM15 16l-4-3a17 17 0 01-11 4c0 4 2 7 4 10zM16 26l3-5-3-4L5 28c3 2 6 4 10 4l1-6z"/></svg></div>
+    <div class="dot"><svg viewBox="0 0 36 36"><path d="M10 11L4 5c-2 3-4 7-4 10 4 0 7-1 10-4zM11 10c3-3 4-6 4-10-3 0-7 2-10 4zM16 6l-3 5 3 4L27 4c-3-2-6-4-10-4l-1 6zM32 15c0-4-2-7-4-10L17 16l4 3a17 17 0 0111-4zM22 21l6 6c2-3 4-7 4-10-4 0-7 1-10 4zM21 22c-3 3-4 6-4 10 3 0 7-2 10-4zM15 16l-4-3a17 17 0 01-11 4c0 4 2 7 4 10zM16 26l3-5-3-4L5 28c3 2 6 4 10 4l1-6z"/></svg></div>
   </div>
-
-  <div class="bottom">
-    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/9/90/AS_Monaco_FC_Logo.svg/1200px-AS_Monaco_FC_Logo.svg.png" alt="logo" class="logo-small">
-    <span class="version">v. 1.0.0</span>
-  </div>
-
 </body>
 </html>
