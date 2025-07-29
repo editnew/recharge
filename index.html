@@ -7,10 +7,11 @@
   <style>
     :root {
       --bg-light: #ffffff;
-      --bg-dark: #0f0f0f;
+      --bg-dark: #0e0e0e;
       --text-light: #222;
       --text-dark: #f1f1f1;
-      --spinner-color: #999;
+      --spinner-track: rgba(0, 0, 0, 0.1);
+      --spinner-ring: #888;
     }
 
     * {
@@ -34,17 +35,17 @@
     h1 {
       font-size: 22px;
       font-weight: 500;
-      margin-bottom: 25px;
+      margin-bottom: 30px;
       letter-spacing: 0.5px;
     }
 
     .spinner {
-      width: 26px;
-      height: 26px;
-      border: 2px solid var(--spinner-color);
-      border-top: 2px solid transparent;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
-      animation: spin 0.8s linear infinite;
+      border: 3px solid var(--spinner-track);
+      border-top-color: var(--spinner-ring);
+      animation: spin 1s ease-in-out infinite;
     }
 
     @keyframes spin {
@@ -58,8 +59,8 @@
       }
 
       .spinner {
-        border-color: #444;
-        border-top-color: #888;
+        border-color: rgba(255, 255, 255, 0.08);
+        border-top-color: #ccc;
       }
     }
   </style>
