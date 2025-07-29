@@ -1,132 +1,127 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mobcash | جاري التحميل</title>
+  <meta charset="UTF-8">
+  <title>Mobcash | Intro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    :root {
-      --primary-color: #00e676;
-      --text-light: #111111;
-      --text-dark: #ffffff;
-      --bg-light: #f2f2f2;
-      --bg-dark: #0e0e0e;
-    }
-
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
     }
 
     body {
-      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background-color: #003c2f;
+      color: white;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
       text-align: center;
-      padding: 20px;
-      background-color: var(--bg-light);
-      color: var(--text-light);
-      opacity: 0;
-      animation: fadeIn 1s ease forwards;
-      transition: background 0.4s, color 0.4s;
+      padding: 30px 20px;
     }
 
-    h1 {
-      font-size: 26px;
-      font-weight: 600;
-      margin-bottom: 12px;
+    .title {
+      font-size: 48px;
+      font-weight: bold;
+      margin-top: 100px;
     }
 
-    .subtitle {
-      font-size: 15px;
-      color: #666;
-      margin-bottom: 30px;
-      animation: fadeIn 1.5s ease forwards;
-      animation-delay: 0.5s;
-      opacity: 0;
+    .svg-icon-main {
+      margin-top: 20px;
+      width: 60px;
+      height: 60px;
+      fill: white;
     }
 
-    .dots-loader {
+    .loader {
       display: flex;
-      gap: 8px;
-      margin-top: 10px;
+      gap: 10px;
+      margin: 30px 0;
+      justify-content: center;
     }
 
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background-color: var(--primary-color);
+    .icon-dot {
+      width: 22px;
+      height: 22px;
+      fill: white;
       opacity: 0.3;
-      animation: pulse 1.2s infinite ease-in-out;
+      animation: pulse 1.4s infinite ease-in-out;
     }
 
-    .dot:nth-child(1) { animation-delay: 0s; }
-    .dot:nth-child(2) { animation-delay: 0.2s; }
-    .dot:nth-child(3) { animation-delay: 0.4s; }
+    .icon-dot:nth-child(1) { animation-delay: 0s; }
+    .icon-dot:nth-child(2) { animation-delay: 0.15s; }
+    .icon-dot:nth-child(3) { animation-delay: 0.3s; }
+    .icon-dot:nth-child(4) { animation-delay: 0.45s; }
+    .icon-dot:nth-child(5) { animation-delay: 0.6s; }
+    .icon-dot:nth-child(6) { animation-delay: 0.75s; }
+    .icon-dot:nth-child(7) { animation-delay: 0.9s; }
 
     @keyframes pulse {
-      0%, 100% { opacity: 0.2; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.5); }
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.4); }
     }
 
-    @keyframes fadeIn {
-      to { opacity: 1; }
+    .bottom {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      opacity: 0.8;
     }
 
-    /* الوضع الداكن تلقائي */
-    @media (prefers-color-scheme: dark) {
-      body {
-        background-color: var(--bg-dark);
-        color: var(--text-dark);
-      }
-
-      .subtitle {
-        color: #aaa;
-      }
-
-      .dot {
-        background-color: var(--primary-color);
-      }
+    .logo-small {
+      width: 40px;
+      height: auto;
     }
 
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 22px;
-      }
-
-      .subtitle {
-        font-size: 14px;
-      }
-
-      .dot {
-        width: 8px;
-        height: 8px;
-      }
+    .version {
+      margin-left: auto;
     }
   </style>
 </head>
 <body>
-  <h1>مرحبًا بك في Mobcash</h1>
-  <p class="subtitle">جارٍ تحميل النظام، الرجاء الانتظار...</p>
-  <div class="dots-loader">
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
+
+  <div class="title">MOBCASH</div>
+
+  <!-- الشعار الكبير -->
+  <svg class="svg-icon-main" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+    <path d="M31.5 17a15 15 0 00-6.7-2 17 17 0 01-6.6 16.9A16 16 0 0032 17.2l-.5-.3zM3.2 8a15 15 0 0010.4 14.3 15 15 0 001.4-5.7 17 17 0 01-5.4-5.3l-.6-.6.1-.2C7.8 8 7.1 5.5 7 2.8 5.3 4 4 5.3 2.8 7h.4v1z"></path>
+  </svg>
+
+  <!-- الأيقونات المتحركة -->
+  <div class="loader">
+    <svg class="icon-dot" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+      <path d="M31.5 17a15 15 0 00-6.7-2 17 17 0 01-6.6 16.9A16 16 0 0032 17.2l-.5-.3zM3.2 8a15 15 0 0010.4 14.3 15 15 0 001.4-5.7 17 17 0 01-5.4-5.3l-.6-.6.1-.2C7.8 8 7.1 5.5 7 2.8 5.3 4 4 5.3 2.8 7h.4v1z"/>
+    </svg>
+    <svg class="icon-dot" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+      <path d="M31.5 17a15 15 0 00-6.7-2 17 17 0 01-6.6 16.9A16 16 0 0032 17.2l-.5-.3zM3.2 8a15 15 0 0010.4 14.3 15 15 0 001.4-5.7 17 17 0 01-5.4-5.3l-.6-.6.1-.2C7.8 8 7.1 5.5 7 2.8 5.3 4 4 5.3 2.8 7h.4v1z"/>
+    </svg>
+    <svg class="icon-dot" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+      <path d="M31.5 17a15 15 0 00-6.7-2 17 17 0 01-6.6 16.9A16 16 0 0032 17.2l-.5-.3zM3.2 8a15 15 0 0010.4 14.3 15 15 0 001.4-5.7 17 17 0 01-5.4-5.3l-.6-.6.1-.2C7.8 8 7.1 5.5 7 2.8 5.3 4 4 5.3 2.8 7h.4v1z"/>
+    </svg>
+    <svg class="icon-dot" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+      <path d="M31.5 17a15 15 0 00-6.7-2 17 17 0 01-6.6 16.9A16 16 0 0032 17.2l-.5-.3zM3.2 8a15 15 0 0010.4 14.3 15 15 0 001.4-5.7 17 17 0 01-5.4-5.3l-.6-.6.1-.2C7.8 8 7.1 5.5 7 2.8 5.3 4 4 5.3 2.8 7h.4v1z"/>
+    </svg>
+    <svg class="icon-dot" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+      <path d="M31.5 17a15 15 0 00-6.7-2 17 17 0 01-6.6 16.9A16 16 0 0032 17.2l-.5-.3zM3.2 8a15 15 0 0010.4 14.3 15 15 0 001.4-5.7 17 17 0 01-5.4-5.3l-.6-.6.1-.2C7.8 8 7.1 5.5 7 2.8 5.3 4 4 5.3 2.8 7h.4v1z"/>
+    </svg>
+    <svg class="icon-dot" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+      <path d="M31.5 17a15 15 0 00-6.7-2 17 17 0 01-6.6 16.9A16 16 0 0032 17.2l-.5-.3zM3.2 8a15 15 0 0010.4 14.3 15 15 0 001.4-5.7 17 17 0 01-5.4-5.3l-.6-.6.1-.2C7.8 8 7.1 5.5 7 2.8 5.3 4 4 5.3 2.8 7h.4v1z"/>
+    </svg>
+    <svg class="icon-dot" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+      <path d="M31.5 17a15 15 0 00-6.7-2 17 17 0 01-6.6 16.9A16 16 0 0032 17.2l-.5-.3zM3.2 8a15 15 0 0010.4 14.3 15 15 0 001.4-5.7 17 17 0 01-5.4-5.3l-.6-.6.1-.2C7.8 8 7.1 5.5 7 2.8 5.3 4 4 5.3 2.8 7h.4v1z"/>
+    </svg>
   </div>
 
-  <script>
-    setTimeout(() => {
-      document.body.style.opacity = '0';
-      document.body.style.transition = 'opacity 0.5s ease';
-      setTimeout(() => {
-        window.location.href = "tachjil.html";
-      }, 500);
-    }, 3500);
-  </script>
+  <div class="bottom">
+    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/9/90/AS_Monaco_FC_Logo.svg/1200px-AS_Monaco_FC_Logo.svg.png" alt="logo" class="logo-small">
+    <span class="version">v. 1.0.0</span>
+  </div>
+
 </body>
 </html>
