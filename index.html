@@ -3,57 +3,62 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mobcash Intro</title>
+  <title>Mobcash | مرحبًا بك</title>
   <style>
     :root {
-      --green: #4caf50;
-      --green-dark: #76ff03;
-      --bg-light: #ffffff;
-      --bg-dark: #121212;
-      --text-light: #000000;
+      --green: #00c853;
+      --green-dark: #69f0ae;
       --text-dark: #ffffff;
+      --text-light: #111111;
+      --bg-light: #ffffff;
+      --bg-dark: #0e0e0e;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
     body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Tahoma', sans-serif;
+      font-family: 'Segoe UI', 'Tahoma', sans-serif;
       background-color: var(--bg-light);
       color: var(--text-light);
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      flex-direction: column;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeIn 1.2s ease forwards;
-      transition: background 0.4s, color 0.4s;
+      padding: 0 20px;
       text-align: center;
+      transition: all 0.3s ease;
+      opacity: 0;
+      animation: fadeIn 1s ease forwards;
     }
 
     h1 {
-      font-size: 26px;
-      margin-bottom: 10px;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
     }
 
-    .subtitle {
-      font-size: 16px;
+    p.subtitle {
+      font-size: 1rem;
       color: #555;
-      margin-bottom: 24px;
-      opacity: 0;
+      margin-bottom: 2rem;
       animation: fadeIn 1.5s ease forwards;
-      animation-delay: 0.8s;
+      animation-delay: 0.5s;
+      opacity: 0;
     }
 
     .loader {
-      width: 50px;
-      height: 50px;
-      border: 5px solid rgba(0, 0, 0, 0.1);
-      border-top: 5px solid var(--green);
+      width: 60px;
+      height: 60px;
+      border: 6px solid rgba(0, 0, 0, 0.1);
+      border-top: 6px solid var(--green);
       border-radius: 50%;
-      animation: spin 1s ease-in-out infinite, pulse 1.4s ease-in-out infinite;
-      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      animation: spin 1s linear infinite, pulse 1.4s ease-in-out infinite;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
     }
 
     @keyframes spin {
@@ -63,13 +68,12 @@
 
     @keyframes pulse {
       0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
+      50% { transform: scale(1.07); }
     }
 
     @keyframes fadeIn {
       to {
         opacity: 1;
-        transform: translateY(0);
       }
     }
 
@@ -78,26 +82,26 @@
         background-color: var(--bg-dark);
         color: var(--text-dark);
       }
-      .subtitle {
+      p.subtitle {
         color: #aaa;
       }
       .loader {
-        border-color: rgba(255, 255, 255, 0.1);
+        border: 6px solid rgba(255, 255, 255, 0.1);
         border-top-color: var(--green-dark);
-        box-shadow: 0 0 10px rgba(255,255,255,0.1);
+        box-shadow: 0 0 10px rgba(255,255,255,0.05);
       }
     }
   </style>
 </head>
 <body>
-  <h1>Mobcash Services</h1>
-  <p class="subtitle">مرحبًا بك في خدمات Mobcash – الرجاء الانتظار...</p>
+  <h1>مرحبًا بك في Mobcash</h1>
+  <p class="subtitle">نقوم بإعداد خدماتك، يرجى الانتظار لحظة...</p>
   <div class="loader"></div>
 
   <script>
     setTimeout(() => {
+      document.body.style.opacity = '0';
       document.body.style.transition = 'opacity 0.5s ease';
-      document.body.style.opacity = 0;
       setTimeout(() => {
         window.location.href = "tachjil.html";
       }, 500);
