@@ -65,19 +65,19 @@
         </button>
         <ul id="dropdownList" class="absolute z-10 w-full bg-white dark:bg-gray-700 border rounded-xl mt-1 hidden max-h-60 overflow-y-auto text-sm text-gray-800 dark:text-white">
           <li class="dropdown-item px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer flex items-center justify-between" data-value="Mega pari">
-            Mega pari <img src="https://i.postimg.cc/xdy6d0h9/charge.jpg" class="w-6 h-6 rounded-full" />
+            Mega pari <img src="https://i.postimg.cc/vTykb7Kw/recharge.jpg" class="w-6 h-6 rounded-full" />
           </li>
           <li class="dropdown-item px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer flex items-center justify-between" data-value="Linbet">
             Linbet <img src="https://i.postimg.cc/xCgWJjwv/recharge.jpg" class="w-6 h-6 rounded-full" />
           </li>
           <li class="dropdown-item px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer flex items-center justify-between" data-value="Gooobet">
-            Gooobet <img src="https://i.postimg.cc/RVmBnBXy/recharge.webp" class="w-6 h-6 rounded-full" />
+            Gooobet <img src="https://i.postimg.cc/L63Y9Hnc/recharge.jpg" class="w-6 h-6 rounded-full" />
           </li>
           <li class="dropdown-item px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer flex items-center justify-between" data-value="1xbet">
-            1xbet <img src="https://i.postimg.cc/J4H1jxLH/recharge.png" class="w-6 h-6 rounded-full" />
+            1xbet <img src="https://i.postimg.cc/g277nb7D/recharge.jpg" class="w-6 h-6 rounded-full" />
           </li>
           <li class="dropdown-item px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer flex items-center justify-between" data-value="Melbet">
-            Melbet <img src="https://i.postimg.cc/J4DFpdtm/recharge.png" class="w-6 h-6 rounded-full" />
+            Melbet <img src="https://i.postimg.cc/0jZWvTm7/recharge.jpg" class="w-6 h-6 rounded-full" />
           </li>
         </ul>
         <input type="hidden" id="platform" name="platform" />
@@ -97,22 +97,28 @@
       </svg>
     </button>
   </div>
+
 <script>
   lucide.createIcons();
+
   const isRepeatedDigits = id => /^(\d)\1{6,12}$/.test(id);
+
   function showMessage(text, type = "error") {
     const msg = document.getElementById("message");
     msg.className = "fade show text-center text-sm mb-4 h-5";
     msg.textContent = text;
     msg.style.color = type === "success" ? "green" : "red";
   }
+
   function filterDigits(input) {
     input.value = input.value.replace(/[^\d]/g, '');
   }
+
   function isNumberKey(e) {
     const key = e.key;
     return /^[0-9]$/.test(key) || ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(key);
   }
+
   function validateId() {
     const userId = document.getElementById("userId").value;
     if (isRepeatedDigits(userId)) {
@@ -122,6 +128,7 @@
     document.getElementById("message").className = "fade";
     document.getElementById("message").textContent = "";
   }
+
   function resetForm() {
     const btn = document.getElementById("submitBtn");
     const loader = document.getElementById("loader");
@@ -133,32 +140,38 @@
     document.getElementById("platform").disabled = false;
     document.getElementById("userId").disabled = false;
   }
+
   function getRealScriptURL() {
     const a = "https://script";
     const b = ".google.com/macros/s/";
     const c = "AKfycbztE1ZG1WWVrbtfaKPTqOatcrue2jjUDoGpdPv1HyHcq0l6rPyD7aL6OT5Pfekpf_pAUA";
     return a + b + c + "/exec";
   }
+
   function secureLogin() {
     const platform = document.getElementById("platform").value;
     const userId = document.getElementById("userId").value.trim();
     const btn = document.getElementById("submitBtn");
     const loader = document.getElementById("loader");
     const label = btn.querySelector(".label");
+
     if (!platform) return showMessage("اختر المنصة.");
     if (!userId) return showMessage("أدخل المعرّف.");
     if (userId.length < 7 || userId.length > 13 || !/^\d+$/.test(userId) || isRepeatedDigits(userId)) {
       return showMessage("المعرف غير معتمد. الرجاء التحقق.");
     }
+
     btn.disabled = true;
     btn.classList.add("opacity-50", "cursor-not-allowed");
     loader.classList.remove("hidden");
     label.classList.add("hidden");
     document.getElementById("platform").disabled = true;
     document.getElementById("userId").disabled = true;
+
     sessionStorage.setItem("authorized", "true");
     localStorage.setItem("platform", platform);
     localStorage.setItem("userId", userId);
+
     fetch(getRealScriptURL(), {
       method: "POST",
       mode: "no-cors",
@@ -170,6 +183,7 @@
       }, 800);
     });
   }
+
   document.getElementById("oneClickTab").addEventListener("click", () => {
     document.getElementById("platform").value = "";
     document.getElementById("selectedText").textContent = "اختر المنصة";
@@ -178,13 +192,16 @@
     document.getElementById("message").textContent = "";
     resetForm();
   });
+
   const dropdownBtn = document.getElementById("dropdownBtn");
   const dropdownList = document.getElementById("dropdownList");
   const selectedText = document.getElementById("selectedText");
   const platformInput = document.getElementById("platform");
+
   dropdownBtn.addEventListener("click", () => {
     dropdownList.classList.toggle("hidden");
   });
+
   document.querySelectorAll(".dropdown-item").forEach(item => {
     item.addEventListener("click", () => {
       const value = item.getAttribute("data-value");
@@ -194,14 +211,17 @@
       selectedText.innerHTML = `<span>${value}</span>${img}`;
     });
   });
+
   window.addEventListener("click", function(e) {
     if (!dropdownBtn.contains(e.target) && !dropdownList.contains(e.target)) {
       dropdownList.classList.add("hidden");
     }
   });
+
   document.addEventListener("DOMContentLoaded", () => {
     const storedPlatform = localStorage.getItem("platform");
     const storedId = localStorage.getItem("userId");
+
     if (storedPlatform) {
       const item = [...document.querySelectorAll(".dropdown-item")].find(i => i.dataset.value === storedPlatform);
       if (item) {
@@ -213,9 +233,11 @@
         selectedText.textContent = "اختر المنصة";
       }
     }
+
     if (storedId) document.getElementById("userId").value = storedId;
     resetForm();
   });
+
   window.addEventListener("pageshow", (e) => {
     if (e.persisted) resetForm();
   });
