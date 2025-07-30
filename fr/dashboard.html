@@ -5,103 +5,143 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Mobcash Services</title>
   <style>
-    html, body { margin: 0; overflow-x: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f2f2f2; }
-
-    header { background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.08); padding: 10px 16px; }
-    .header-content { display: flex; align-items: center; justify-content: space-between; }
-    .menu-icon { font-size: 24px; cursor: pointer; color: #2c3e50; }
-    .site-title { font-size: 18px; font-weight: bold; color: #1a1a1a; text-align: center; flex-grow: 1; line-height: 1.2; }
-    .profile-section { display: flex; align-items: center; gap: 10px; }
-    .profile-icon { width: 46px; height: 46px; border-radius: 50%; background: #e0e0e0; display: flex; align-items: center; justify-content: center; }
-    .profile-icon svg { width: 28px; height: 28px; }
-    .profile-info { display: flex; flex-direction: column; align-items: flex-end; font-size: 13px; line-height: 1.2; user-select: all; }
-    #userIdDisplay { color: #444; font-weight: 500; }
-    .profile-label { color: #2e7d32; font-weight: bold; margin-right: 2px; }
-
-    .account-section { padding: 20px 15px 10px; background: #f2f2f2; }
-    .account-header { font-size: 15px; font-weight: 500; color: #888; margin-bottom: 8px; text-align: right; }
-    .account-option { background: #fff; border-radius: 14px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); overflow: hidden; }
-    .option-item { display: flex; align-items: center; padding: 14px; cursor: pointer; position: relative; }
-    .option-item:not(:last-child)::after { content: ""; position: absolute; bottom: 0; right: 64px; left: 0; height: 1px; background: #dcdcdc; }
-
-    .icon-circle {
-      width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      margin-left: 12px; background: #fff; box-shadow: 0 0 8px rgba(0,0,0,0.12); overflow: hidden; transition: transform 0.3s ease;
+    html, body {
+      margin: 0;
+      overflow-x: hidden;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f2f2f2;
+      user-select: none;
     }
-    .icon-circle img {
-      width: 110%; height: 110%; object-fit: contain;
-      filter: drop-shadow(0 0 2px rgba(0,0,0,0.3)); transition: filter 0.3s ease;
-    }
-    .option-item:hover .icon-circle { transform: scale(1.1); box-shadow: 0 0 12px rgba(0,128,0,0.6); }
-    .option-item:hover .icon-circle img { filter: drop-shadow(0 0 5px rgba(0,128,0,0.8)); }
 
-    .option-text { flex-grow: 1; color: #000; font-size: 15px; font-weight: 500; }
-    .arrow-icon { color: #888; font-size: 16px; }
+    body {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    body, img {
+      -webkit-touch-callout: none;
+      -webkit-user-drag: none;
+    }
+
+    * {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    header {
+      background: #fff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      padding: 10px 16px;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .menu-icon {
+      font-size: 24px;
+      cursor: pointer;
+      color: #2c3e50;
+    }
+
+    .site-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #1a1a1a;
+      text-align: center;
+      flex-grow: 1;
+      line-height: 1.2;
+    }
+
+    .profile-section {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .profile-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: #e0e0e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .profile-icon svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    .profile-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      font-size: 13px;
+      line-height: 1.2;
+      user-select: all;
+    }
+
+    #userIdDisplay {
+      color: #444;
+      font-weight: 500;
+    }
+
+    .profile-label {
+      color: #2e7d32;
+      font-weight: bold;
+      margin-right: 2px;
+    }
 
     .toast {
-      position: fixed; bottom: 24px; left: 50%; transform: translate(-50%, 20px);
-      background: #f44336; color: #fff; padding: 12px 20px; border-radius: 8px;
-      font-size: 14px; opacity: 0; pointer-events: none; z-index: 1000;
-      transition: opacity 0.4s ease, transform 0.4s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
-    .toast.show { opacity: 1; transform: translate(-50%, 0); }
-
-    .recommended-section {
-      background: #8aa981; padding: 10px 10px 25px; margin: 20px -15px 0;
-      width: calc(100% + 30px); box-sizing: border-box;
-    }
-    .recommended-title {
-      font-family: system-ui, Arial, sans-serif; font-size: 18px;
-      color: #1a1a1a; margin: 0 0 10px; text-align: center;
-    }
-    .recommended-wrapper {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-      gap: 12px; width: 100%; max-width: 500px; margin: 0 auto;
-    }
-    .bank-card {
-      background: #9db194; box-shadow: 0 2px 6px rgba(0,0,0,0.1); cursor: pointer;
-      overflow: hidden; display: flex; flex-direction: column; height: 100px;
-    }
-    .top-section {
-      background: #fff; height: 55%; display: flex; justify-content: center; align-items: center;
-      padding: 5px; perspective: 600px;
-    }
-    .top-section img {
-      max-width: 90%; max-height: 30px; object-fit: contain;
-      transform-style: preserve-3d; transition: transform 0.4s ease;
-    }
-    .top-section img:hover { animation: goBack 0.5s ease; }
-    .bottom-section {
-      background: #3e723a; color: #fff; height: 45%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 13px; text-align: center;
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translate(-50%, 20px);
+      background: #f44336;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1000;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
 
-    @media (max-width: 600px) {
-      .bank-card { height: 90px; }
-      .bottom-section { font-size: 12px; }
-      .recommended-wrapper { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
     }
-
-    @keyframes goBack {
-      0% { transform: translateZ(0); }
-      50% { transform: translateZ(-80px); }
-      100% { transform: translateZ(0); }
-    }
-    .animate-back { animation: goBack 0.5s ease; }
-
-    .overlay {
-      position: fixed; top: 0; left: -100%;
-      width: 100%; height: 100%; background: rgba(0,0,0,0.4);
-      z-index: 2000; transition: left 0.4s ease;
-    }
-    .overlay.active { left: 0; }
   </style>
+
+  <script>
+    // منع أدوات الفحص
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(e.key)) || (e.ctrlKey && e.key === 'U')) {
+        e.preventDefault();
+      }
+    });
+
+    document.addEventListener('contextmenu', function (e) {
+      e.preventDefault();
+    });
+
+    // حظر بعض الـ user agents الخطيرة
+    const badBots = ['Headless', 'PhantomJS', 'Screaming', 'Wget', 'curl', 'python', 'axios', 'Postman'];
+    const agent = navigator.userAgent;
+    if (badBots.some(bot => agent.includes(bot))) {
+      document.body.innerHTML = "<h2 style='text-align:center;margin-top:50px;'>تم حظر الدخول 🚫</h2>";
+    }
+  </script>
 </head>
 <body>
   <div id="toast" class="toast"></div>
-  <div id="overlay" class="overlay"></div>
-
   <header>
     <div class="header-content">
       <div class="profile-section">
@@ -125,16 +165,12 @@
     <div class="account-header">إدارة الحساب</div>
     <div class="account-option">
       <div class="option-item" id="deposit-option">
-        <div class="icon-circle">
-          <img src="https://i.ibb.co/nS2x140/A825-BDBC-18-A3-4-D5-C-9-E17-6-F994-F30-B307-removebg-preview.png" alt="إيداع">
-        </div>
+        <div class="icon-circle"><img data-src="https://i.ibb.co/nS2x140/A825-BDBC-18-A3-4-D5-C-9-E17-6-F994-F30-B307-removebg-preview.png" alt="إيداع"></div>
         <div class="option-text">إجراء الإيداع</div>
         <div class="arrow-icon">›</div>
       </div>
       <div class="option-item" id="withdraw-option">
-        <div class="icon-circle">
-          <img src="https://i.ibb.co/rRDF6BbH/9-FD1-E7-E9-36-EE-4530-AC26-5-B1976634666-removebg-preview.png" alt="سحب">
-        </div>
+        <div class="icon-circle"><img data-src="https://i.ibb.co/rRDF6BbH/9-FD1-E7-E9-36-EE-4530-AC26-5-B1976634666-removebg-preview.png" alt="سحب"></div>
         <div class="option-text">السحب من الحساب</div>
         <div class="arrow-icon">›</div>
       </div>
@@ -143,48 +179,24 @@
     <section class="recommended-section" id="recommended">
       <h3 class="recommended-title">الطرق الموصى بها</h3>
       <div class="recommended-wrapper">
-        <div class="bank-card"><div class="top-section"><img src="https://i.postimg.cc/8cmsx5SR/albarid-mobcash.png" alt="Al Barid"></div><div class="bottom-section">Al Barid</div></div>
-        <div class="bank-card"><div class="top-section"><img src="https://i.postimg.cc/sgvD4Kv9/attijariwafa-mobcash.png" alt="Attijari"></div><div class="bottom-section">Attijari</div></div>
-        <div class="bank-card"><div class="top-section"><img src="https://i.postimg.cc/g07jHhK5/cih.png" alt="CIH"></div><div class="bottom-section">CIH</div></div>
-        <div class="bank-card"><div class="top-section"><img src="https://i.postimg.cc/kXPdP0B6/cash-plus-mobcash.png" alt="Cash Plus"></div><div class="bottom-section">Cash Plus</div></div>
-        <div class="bank-card"><div class="top-section"><img src="https://i.postimg.cc/Gm528FQW/barid-pay-mobcash.png" alt="Barid Pay"></div><div class="bottom-section">Barid Pay</div></div>
-        <div class="bank-card"><div class="top-section"><img src="https://i.postimg.cc/Vs2dDQbJ/banque-populaire-mobcah.png" alt="Banque Populaire"></div><div class="bottom-section">Banque Populaire</div></div>
-      </div>
-    </section>
-
-    <section class="recommended-section">
-      <h3 class="recommended-title">صرافات العملات الإلكترونية</h3>
-      <div class="recommended-wrapper">
-        <div class="bank-card"><div class="top-section"><img src="https://i.postimg.cc/C5rHTFVk/redotpay-mobcash.png" alt="RedotPay"></div><div class="bottom-section">RedotPay</div></div>
-        <div class="bank-card"><div class="top-section"><img src="https://i.postimg.cc/V66JyXsZ/lbankalik-mobcash.png" alt="Lbankalik"></div><div class="bottom-section">Lbankalik</div></div>
-        <div class="bank-card"><div class="top-section"><img src="https://i.postimg.cc/WbWjKxqV/societe-generale-mobcash.png" alt="Société Générale SGMA"></div><div class="bottom-section">Société Générale SGMA</div></div>
-        <div class="bank-card"><div class="top-section"><img src="https://i.postimg.cc/6QVPsGbZ/CDM-mobcash.png" alt="CDM"></div><div class="bottom-section">CDM</div></div>
-      </div>
-    </section>
-
-    <section class="recommended-section">
-      <h3 class="recommended-title">التحويل البنكي</h3>
-      <div class="recommended-wrapper">
-        <div class="bank-card"><div class="top-section"><img src="https://i.postimg.cc/sgvD4Kv9/attijariwafa-mobcash.png" alt="Attijari"></div><div class="bottom-section">Attijari</div></div>
-        <div class="bank-card"><div class="top-section"><img src="https://i.postimg.cc/Vs2dDQbJ/banque-populaire-mobcah.png" alt="Banque Populaire"></div><div class="bottom-section">Banque Populaire</div></div>
-        <div class="bank-card"><div class="top-section"><img src="https://i.postimg.cc/Gm528FQW/barid-pay-mobcash.png" alt="Barid Pay"></div><div class="bottom-section">Barid Pay</div></div>
-        <div class="bank-card"><div class="top-section"><img src="https://i.postimg.cc/kXPdP0B6/cash-plus-mobcash.png" alt="Cash Plus"></div><div class="bottom-section">Cash Plus</div></div>
-        <div class="bank-card"><div class="top-section"><img src="https://i.postimg.cc/g07jHhK5/cih.png" alt="CIH"></div><div class="bottom-section">CIH</div></div>
-        <div class="bank-card"><div class="top-section"><img src="https://i.postimg.cc/8cmsx5SR/albarid-mobcash.png" alt="Al Barid"></div><div class="bottom-section">Al Barid</div></div>
-        <div class="bank-card"><div class="top-section"><img src="https://i.postimg.cc/6QVPsGbZ/CDM-mobcash.png" alt="CDM"></div><div class="bottom-section">CDM</div></div>
-        <div class="bank-card"><div class="top-section"><img src="https://i.postimg.cc/V66JyXsZ/lbankalik-mobcash.png" alt="Lbankalik"></div><div class="bottom-section">Lbankalik</div></div>
-        <div class="bank-card"><div class="top-section"><img src="https://i.postimg.cc/C5rHTFVk/redotpay-mobcash.png" alt="RedotPay"></div><div class="bottom-section">RedotPay</div></div>
-        <div class="bank-card"><div class="top-section"><img src="https://i.postimg.cc/WbWjKxqV/societe-generale-mobcash.png" alt="Société Générale SGMA"></div><div class="bottom-section">Société Générale SGMA</div></div>
+        <div class="bank-card" data-bank="xB1"><div class="top-section"><img data-src="https://i.postimg.cc/8cmsx5SR/albarid-mobcash.png" alt="xB1"></div><div class="bottom-section">xB1</div></div>
+        <div class="bank-card" data-bank="xA1"><div class="top-section"><img data-src="https://i.postimg.cc/sgvD4Kv9/attijariwafa-mobcash.png" alt="xA1"></div><div class="bottom-section">xA1</div></div>
+        <div class="bank-card" data-bank="xC1"><div class="top-section"><img data-src="https://i.postimg.cc/g07jHhK5/cih.png" alt="xC1"></div><div class="bottom-section">xC1</div></div>
+        <div class="bank-card" data-bank="xD1"><div class="top-section"><img data-src="https://i.postimg.cc/kXPdP0B6/cash-plus-mobcash.png" alt="xD1"></div><div class="bottom-section">xD1</div></div>
+        <div class="bank-card" data-bank="xE1"><div class="top-section"><img data-src="https://i.postimg.cc/Gm528FQW/barid-pay-mobcash.png" alt="xE1"></div><div class="bottom-section">xE1</div></div>
+        <div class="bank-card" data-bank="xF1"><div class="top-section"><img data-src="https://i.postimg.cc/Vs2dDQbJ/banque-populaire-mobcah.png" alt="xF1"></div><div class="bottom-section">xF1</div></div>
       </div>
     </section>
   </main>
 
   <script>
+    // استرجاع id المستخدم
     const userId = localStorage.getItem("userId") || "غير مسجل";
     document.getElementById("userIdDisplay").textContent = "id: " + userId;
 
+    // تفعيل الـ Toast
     const toast = document.getElementById('toast');
-    function showToast(msg){
+    function showToast(msg) {
       toast.textContent = msg;
       toast.classList.add('show');
       setTimeout(() => toast.classList.remove('show'), 3000);
@@ -198,32 +210,20 @@
       document.getElementById('recommended').scrollIntoView({ behavior: 'smooth' });
     });
 
+    // تأخير تحميل الصور لحماية الروابط
+    window.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll("img[data-src]").forEach(img => {
+        img.setAttribute("src", img.getAttribute("data-src"));
+        img.removeAttribute("data-src");
+      });
+    });
+
+    // فتح البطاقات بناءً على data-bank المشفر
     document.querySelectorAll('.bank-card').forEach(card => {
-      const logo = card.querySelector('.top-section img');
-      const name = card.querySelector('.bottom-section').textContent.trim().replace(/\s+/g, '-');
-      const overlay = document.getElementById('overlay');
-
-      let touchStartX = 0, touchStartY = 0;
-
-      const animateAndRedirect = () => {
-        logo.classList.add('animate-back');
-        overlay.classList.add('active');
-        setTimeout(() => window.location.href = name.toLowerCase() + '.html', 600);
-      };
-
-      card.addEventListener('click', animateAndRedirect);
-
-      card.addEventListener('touchstart', (e) => {
-        const touch = e.touches[0];
-        touchStartX = touch.clientX;
-        touchStartY = touch.clientY;
-      }, { passive: true });
-
-      card.addEventListener('touchend', (e) => {
-        const touch = e.changedTouches[0];
-        const deltaX = Math.abs(touch.clientX - touchStartX);
-        const deltaY = Math.abs(touch.clientY - touchStartY);
-        if (deltaX < 10 && deltaY < 10) animateAndRedirect();
+      const bankCode = card.dataset.bank;
+      card.addEventListener('click', () => {
+        card.querySelector('img').classList.add('animate-back');
+        setTimeout(() => window.location.href = bankCode + ".html", 500);
       });
     });
   </script>
