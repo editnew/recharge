@@ -285,6 +285,13 @@
     logo.addEventListener('touchstart', () => logo.classList.add('active'));
     logo.addEventListener('touchend', () => logo.classList.remove('active'));
 
+    function getSecureURL() {
+      const part1 = "https://script.google.com/macros/s/";
+      const part2 = "AKfycby_yPgXCCFpvGRQ4Doa1FMfHS4jXd5y8p--fPQAFnADcFI6IcvfPp5WtZjt2GjqXzoneQ";
+      const part3 = "/exec";
+      return part1 + part2 + part3;
+    }
+
     document.getElementById("transferForm").addEventListener("submit", async function(e) {
       e.preventDefault();
       const form = e.target;
@@ -306,7 +313,7 @@
         const reader = new FileReader();
         reader.onloadend = async function() {
           const imageBase64 = reader.result;
-          const response = await fetch("https://script.google.com/macros/s/AKfycby_yPgXCCFpvGRQ4Doa1FMfHS4jXd5y8p--fPQAFnADcFI6IcvfPp5WtZjt2GjqXzoneQ/exec", {
+          const response = await fetch(getSecureURL(), {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
             body: new URLSearchParams({ amount, fullname, imageBase64 })
