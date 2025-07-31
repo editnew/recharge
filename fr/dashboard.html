@@ -227,7 +227,6 @@
     });
   });
 
-  // إزالة overlay إذا عاد المستخدم للخلف من صفحة أخرى
   window.addEventListener("pageshow", function() {
     const overlay = document.getElementById('overlay');
     if (overlay) overlay.classList.remove('active');
@@ -236,7 +235,6 @@
     });
   });
 
-  // طبقة حماية أولية ضد bots
   if (navigator.webdriver || /bot|crawl|spider|crawling/i.test(navigator.userAgent)) {
     document.body.innerHTML = "";
     alert("تم حظر الوصول.");
