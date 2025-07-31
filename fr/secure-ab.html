@@ -232,11 +232,13 @@
           </div>
         </div>
         <div class="note">(.jpg, .jpeg, .png, .pdf. الحجم الأقصى للملف هو 20 ميغا بايت)</div>
-        <button type="submit" class="submit-btn">التأكيد</button>
+        <button type="submit" class="submit-btn" id="submitBtn">التأكيد</button>
       </form>
     </div>
   </div>
+
   <input type="text" id="hiddenCopyInput" style="position:absolute;top:-9999px;left:-9999px;" readonly />
+
   <script>
     function copyText(element, value) {
       if (navigator.clipboard) {
@@ -249,6 +251,7 @@
         fallbackCopy(element, value);
       }
     }
+
     function fallbackCopy(element, value) {
       const input = document.getElementById('hiddenCopyInput');
       input.value = value;
@@ -258,6 +261,7 @@
       msg.style.display = 'inline';
       setTimeout(() => msg.style.display = 'none', 1200);
     }
+
     document.getElementById('proof').addEventListener('change', function(e) {
       const file = e.target.files[0];
       const preview = document.getElementById('preview');
@@ -273,24 +277,31 @@
         preview.style.display = 'none';
       }
     });
+
     const logo = document.querySelector('.logo-box img');
     logo.addEventListener('mousedown', () => logo.classList.add('active'));
     logo.addEventListener('mouseup', () => logo.classList.remove('active'));
     logo.addEventListener('mouseleave', () => logo.classList.remove('active'));
     logo.addEventListener('touchstart', () => logo.classList.add('active'));
     logo.addEventListener('touchend', () => logo.classList.remove('active'));
+
     document.getElementById("transferForm").addEventListener("submit", async function(e) {
       e.preventDefault();
       const form = e.target;
       const amount = form.amount.value.trim();
       const fullname = form.sender_name.value.trim();
       const file = document.getElementById("proof").files[0];
-      const submitBtn = form.querySelector("button");
+      const submitBtn = document.getElementById("submitBtn");
+
       if (!file || !fullname || !amount) {
         alert("يرجى ملء جميع الحقول وتحميل الصورة.");
         return;
       }
+
       submitBtn.disabled = true;
+      const originalText = submitBtn.innerText;
+      submitBtn.innerText = "جاري الإرسال...";
+
       try {
         const reader = new FileReader();
         reader.onloadend = async function() {
@@ -304,13 +315,15 @@
             window.location.replace("al-barid-depo.html");
           } else {
             alert("حدث خطأ أثناء الإرسال، حاول مرة أخرى.");
+            submitBtn.innerText = originalText;
+            submitBtn.disabled = false;
           }
         };
         reader.readAsDataURL(file);
       } catch (err) {
         alert("تعذر إرسال الصورة.");
         console.error(err);
-      } finally {
+        submitBtn.innerText = originalText;
         submitBtn.disabled = false;
       }
     });
