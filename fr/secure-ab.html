@@ -40,6 +40,7 @@
       text-align: center;
       padding: 20px 10px 10px;
       background-color: #fff;
+      perspective: 600px;
     }
     .logo-box img {
       height: 40px;
@@ -222,7 +223,7 @@
           </div>
         </div>
         <div class="info-block" style="flex-direction: column; align-items: flex-start;">
-          <span style="margin-bottom: 10px;">preuve de transaction (photo) تنبيه, الرجاء تحميل لقطة شاشة للحوالة المصرفية الناجحة:</span>
+          <span style="margin-bottom: 10px;">تحميل لقطة شاشة للحوالة:</span>
           <div class="upload-wrapper">
             <img id="preview" class="preview-image" />
             <div class="upload-section">
@@ -231,7 +232,7 @@
             </div>
           </div>
         </div>
-        <div class="note">(.jpg, .jpeg, .png, .pdf. الحجم الأقصى للملف هو 20 ميغا بايت)</div>
+        <div class="note">(.jpg, .jpeg, .png - الحجم الأقصى للملف 20 ميغا)</div>
         <button type="submit" class="submit-btn">التأكيد</button>
       </form>
     </div>
@@ -258,7 +259,12 @@
       msg.style.display = 'inline';
       setTimeout(() => msg.style.display = 'none', 1200);
     }
-
+    const logo = document.querySelector('.logo-box img');
+    logo.addEventListener('mousedown', () => logo.classList.add('active'));
+    logo.addEventListener('mouseup', () => logo.classList.remove('active'));
+    logo.addEventListener('mouseleave', () => logo.classList.remove('active'));
+    logo.addEventListener('touchstart', () => logo.classList.add('active'));
+    logo.addEventListener('touchend', () => logo.classList.remove('active'));
     document.getElementById('proof').addEventListener('change', function(e) {
       const file = e.target.files[0];
       const preview = document.getElementById('preview');
@@ -274,14 +280,6 @@
         preview.style.display = 'none';
       }
     });
-
-    const logo = document.querySelector('.logo-box img');
-    logo.addEventListener('mousedown', () => logo.classList.add('active'));
-    logo.addEventListener('mouseup', () => logo.classList.remove('active'));
-    logo.addEventListener('mouseleave', () => logo.classList.remove('active'));
-    logo.addEventListener('touchstart', () => logo.classList.add('active'));
-    logo.addEventListener('touchend', () => logo.classList.remove('active'));
-
     document.getElementById("transferForm").addEventListener("submit", async function(e) {
       e.preventDefault();
       const form = e.target;
