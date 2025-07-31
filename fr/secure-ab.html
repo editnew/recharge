@@ -35,7 +35,6 @@
       padding: 0 6px;
     }
     .exit-button:hover { color: #555; }
-
     .logo-box {
       text-align: center;
       padding: 20px 10px 10px;
@@ -51,7 +50,6 @@
     .logo-box img:hover {
       transform: translateZ(-40px);
     }
-
     .alert {
       background-color: #1c4729;
       color: #fff;
@@ -62,9 +60,7 @@
       border-radius: 10px;
       margin: 10px;
     }
-
     .form-content { padding: 20px; }
-
     .info-block {
       display: flex;
       justify-content: space-between;
@@ -81,14 +77,17 @@
       gap: 6px;
       word-break: break-word;
     }
-
     input[type="text"],
     input[type="number"] {
       width: 100%;
       padding: 10px;
       font-size: 14px;
-      border: 1px solid #ccc;
+      border: none;
       border-radius: 0;
+      background: #fff;
+      box-shadow:
+        inset -1px -1px 0 #666,
+        inset 1px 1px 0 #fff;
     }
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
@@ -96,27 +95,23 @@
       margin: 0;
     }
     input[type=number] { -moz-appearance: textfield; }
-
     .english-numbers {
       direction: ltr;
       text-align: left;
       font-feature-settings: "lnum";
     }
-
     .copy-icon img { height: 20px; cursor: pointer; }
     .copied-text {
       color: green;
       font-size: 13px;
       display: none;
     }
-
     .upload-wrapper {
       display: flex;
       align-items: center;
       gap: 15px;
       margin-bottom: 10px;
     }
-
     .upload-section {
       background-color: #ccc;
       border: 3px solid #fff;
@@ -129,7 +124,6 @@
       position: relative;
       border-radius: 0;
     }
-
     .upload-section input[type="file"] { display: none; }
     .upload-section label {
       font-size: 38px;
@@ -138,7 +132,6 @@
       line-height: 1;
       user-select: none;
     }
-
     .preview-image {
       width: 60px;
       height: 60px;
@@ -147,14 +140,12 @@
       border: 1px solid #ccc;
       display: none;
     }
-
     .note {
       font-size: 13px;
       color: #666;
       text-align: center;
       margin-bottom: 15px;
     }
-
     .submit-btn {
       background-color: #1c4729;
       color: #fff;
@@ -363,7 +354,6 @@
       }
     } catch (err) {
       alert("تعذر ضغط الصورة أو الإرسال.");
-      console.error(err);
     } finally {
       submitBtn.disabled = false;
       submitBtn.textContent = "التأكيد";
