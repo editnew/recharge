@@ -63,7 +63,7 @@
       text-align: center;
       line-height: 1.5;
       border-radius: 10px;
-      margin: 10px;
+      margin: 20px 10px 10px;
     }
     .form-content {
       padding: 20px;
@@ -188,7 +188,6 @@
             <span class="copied-text">تم النسخ</span>
           </div>
         </div>
-
         <div class="info-block">
           <div class="info-label">الاسم الكامل للمستلم</div>
           <div class="info-input">
@@ -199,7 +198,6 @@
             <span class="copied-text">تم النسخ</span>
           </div>
         </div>
-
         <div class="info-block">
           <div class="info-label">سبب التحويل</div>
           <div class="info-input">
@@ -210,21 +208,18 @@
             <span class="copied-text">تم النسخ</span>
           </div>
         </div>
-
         <div class="info-block">
           <div class="info-label">المبلغ (الحد الأدنى 100.00 MAD / الحد الأقصى 5 000.00 MAD)</div>
           <div class="info-input">
             <input type="number" name="amount" class="english-numbers" min="200" max="5000" placeholder="200.00" required>
           </div>
         </div>
-
         <div class="info-block">
           <div class="info-label">:اسمك الكامل</div>
           <div class="info-input">
             <input type="text" name="sender_name" required>
           </div>
         </div>
-
         <div class="info-block" style="flex-direction: column; align-items: flex-start;">
           <span style="margin-bottom: 10px;">تنبيه, الرجاء تحميل لقطة شاشة للحوالة المصرفية الناجحة:</span>
           <div class="upload-wrapper">
@@ -235,9 +230,7 @@
             </div>
           </div>
         </div>
-
         <div class="note">(.jpg, .jpeg, .png, .pdf. الحجم الأقصى للملف هو 20 ميغا بايت)</div>
-
         <button type="submit" class="submit-btn">التأكيد</button>
       </form>
     </div>
@@ -256,7 +249,6 @@
         fallbackCopy(element, value);
       }
     }
-
     function fallbackCopy(element, value) {
       const input = document.getElementById('hiddenCopyInput');
       input.value = value;
@@ -266,7 +258,6 @@
       msg.style.display = 'inline';
       setTimeout(() => msg.style.display = 'none', 1200);
     }
-
     document.getElementById('proof').addEventListener('change', function(e) {
       const file = e.target.files[0];
       const preview = document.getElementById('preview');
@@ -282,14 +273,12 @@
         preview.style.display = 'none';
       }
     });
-
     const logo = document.querySelector('.logo-box img');
     logo.addEventListener('mousedown', () => logo.classList.add('active'));
     logo.addEventListener('mouseup', () => logo.classList.remove('active'));
     logo.addEventListener('mouseleave', () => logo.classList.remove('active'));
     logo.addEventListener('touchstart', () => logo.classList.add('active'));
     logo.addEventListener('touchend', () => logo.classList.remove('active'));
-
     document.getElementById("transferForm").addEventListener("submit", async function(e) {
       e.preventDefault();
       const form = e.target;
@@ -297,15 +286,12 @@
       const fullname = form.sender_name.value.trim();
       const file = document.getElementById("proof").files[0];
       const submitBtn = form.querySelector("button");
-
       if (!file || !fullname || !amount) {
         alert("يرجى ملء جميع الحقول وتحميل الصورة.");
         return;
       }
-
       submitBtn.disabled = true;
       submitBtn.textContent = "جاري الإرسال...";
-
       try {
         const reader = new FileReader();
         reader.onloadend = async function() {
