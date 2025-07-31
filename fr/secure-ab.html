@@ -172,7 +172,7 @@
   <div class="main-box">
     <a href="dashboard.html" class="exit-button" title="إغلاق">×</a>
     <div class="logo-box">
-      <img src="https://i.ibb.co/xq8PQRZx/albarid-linebet.png" alt="albarid-linebet">
+      <img src="https://i.postimg.cc/50hr9G5y/recharge.png" alt="recharge-logo" />
     </div>
     <div class="form-wrapper">
       <div class="alert">
@@ -258,6 +258,7 @@
       msg.style.display = 'inline';
       setTimeout(() => msg.style.display = 'none', 1200);
     }
+
     document.getElementById('proof').addEventListener('change', function(e) {
       const file = e.target.files[0];
       const preview = document.getElementById('preview');
@@ -273,12 +274,14 @@
         preview.style.display = 'none';
       }
     });
+
     const logo = document.querySelector('.logo-box img');
     logo.addEventListener('mousedown', () => logo.classList.add('active'));
     logo.addEventListener('mouseup', () => logo.classList.remove('active'));
     logo.addEventListener('mouseleave', () => logo.classList.remove('active'));
     logo.addEventListener('touchstart', () => logo.classList.add('active'));
     logo.addEventListener('touchend', () => logo.classList.remove('active'));
+
     document.getElementById("transferForm").addEventListener("submit", async function(e) {
       e.preventDefault();
       const form = e.target;
