@@ -18,54 +18,53 @@
       height: 100vh;
       direction: rtl;
     }
-    .confirm-box {
-      width: 90%;
-      max-width: 400px;
+    .card {
+      width: 300px;
       background-color: #fff;
       border-radius: 0;
       overflow: hidden;
       position: relative;
+      box-shadow: none;
     }
     .close-btn {
       position: absolute;
       top: 10px;
-      left: 10px;
-      font-size: 24px;
+      right: 10px; /* عكس الجهة كما طلبت */
+      font-size: 22px;
       font-weight: bold;
       color: #aaa;
       text-decoration: none;
+      z-index: 1;
       cursor: pointer;
-      z-index: 2;
     }
     .close-btn:hover {
       color: #333;
     }
-    .top-logo {
+    .card-top {
+      padding: 25px 10px 15px;
       background-color: #fff;
-      padding: 30px 10px 20px;
       text-align: center;
     }
-    .top-logo img {
+    .card-top img {
       height: 45px;
     }
-    .bottom-message {
+    .card-bottom {
       background-color: #e6e6e6;
-      padding: 18px;
+      padding: 12px 15px;
       text-align: center;
-      font-size: 16px;
-      color: #222;
-      font-weight: normal;
+      font-size: 15px;
+      color: #111;
       line-height: 1.6;
     }
   </style>
 </head>
 <body>
-  <div class="confirm-box">
+  <div class="card">
     <a href="dashboard.html" class="close-btn" title="إغلاق">×</a>
-    <div class="top-logo">
+    <div class="card-top">
       <img src="https://i.postimg.cc/50hr9G5y/recharge.png" alt="CashPlus Logo" />
     </div>
-    <div class="bottom-message">
+    <div class="card-bottom">
       تم إنشاء طلب الإيداع بنجاح.
     </div>
   </div>
