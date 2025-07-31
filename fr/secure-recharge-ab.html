@@ -2,28 +2,28 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>تم إنشاء الإيداع</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>تأكيد الإيداع</title>
   <style>
     * {
       box-sizing: border-box;
-      font-family: Arial, sans-serif;
+      font-family: system-ui, Arial, sans-serif;
     }
     body {
       margin: 0;
-      background-color: #f0f0f0;
+      background-color: rgba(0, 0, 0, 0.3);
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       direction: rtl;
     }
-    .success-box {
+    .confirm-box {
       width: 90%;
-      max-width: 420px;
+      max-width: 400px;
       background-color: #fff;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
       border-radius: 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.25);
       overflow: hidden;
       position: relative;
     }
@@ -31,43 +31,43 @@
       position: absolute;
       top: 10px;
       left: 10px;
-      font-size: 26px;
+      font-size: 24px;
       font-weight: bold;
-      color: #777;
+      color: #aaa;
       text-decoration: none;
+      cursor: pointer;
       z-index: 2;
     }
     .close-btn:hover {
       color: #333;
     }
-    .logo-container {
-      padding: 25px 15px 10px;
-      text-align: center;
+    .top-logo {
       background-color: #fff;
-    }
-    .logo-container img {
-      height: 42px;
-    }
-    .message-box {
-      background-color: #e6e6e6;
-      color: #000;
-      padding: 20px 20px;
-      font-size: 16px;
+      padding: 30px 10px 20px;
       text-align: center;
-      line-height: 1.6;
+    }
+    .top-logo img {
+      height: 45px;
+    }
+    .bottom-message {
+      background-color: #e6e6e6;
+      padding: 18px;
+      text-align: center;
+      font-size: 16px;
+      color: #222;
       border-top: 1px solid #ccc;
-      border-bottom: 1px solid #ccc;
-      border-radius: 0;
+      font-weight: normal;
+      line-height: 1.6;
     }
   </style>
 </head>
 <body>
-  <div class="success-box">
+  <div class="confirm-box">
     <a href="dashboard.html" class="close-btn" title="إغلاق">×</a>
-    <div class="logo-container">
-      <img src="https://i.postimg.cc/50hr9G5y/recharge.png" alt="Cash Plus Logo">
+    <div class="top-logo">
+      <img src="https://i.postimg.cc/50hr9G5y/recharge.png" alt="CashPlus Logo" />
     </div>
-    <div class="message-box">
+    <div class="bottom-message">
       تم إنشاء طلب الإيداع بنجاح.
     </div>
   </div>
