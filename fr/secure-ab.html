@@ -69,13 +69,13 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 15px;
+      margin-bottom: 12px;
       font-size: 15px;
       color: #333;
     }
-    .info-label { width: 45%; text-align: right; }
+    .info-label { width: 40%; text-align: right; }
     .info-input {
-      width: 50%;
+      width: 60%;
       display: flex;
       align-items: center;
       gap: 6px;
@@ -89,6 +89,7 @@
       font-size: 14px;
       border: 1px solid #ccc;
       border-radius: 0;
+      background-color: #fff;
     }
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
@@ -103,55 +104,31 @@
       font-feature-settings: "lnum";
     }
 
-    .copy-icon img { height: 20px; cursor: pointer; }
-    .copied-text {
-      color: green;
-      font-size: 13px;
-      display: none;
-    }
-
-    .upload-wrapper {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 10px;
-    }
-
     .upload-section {
       background-color: #ccc;
-      border: 2px solid #fff;
-      width: 80px;
-      height: 80px;
+      border: 1px solid #aaa;
+      width: 40px;
+      height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
-      border-radius: 0;
     }
 
     .upload-section input[type="file"] { display: none; }
     .upload-section label {
-      font-size: 38px;
+      font-size: 24px;
       color: #fff;
       cursor: pointer;
       line-height: 1;
       user-select: none;
     }
 
-    .preview-image {
-      width: 60px;
-      height: 60px;
-      border-radius: 0;
-      object-fit: cover;
-      border: 1px solid #ccc;
-      display: none;
-    }
-
     .note {
-      font-size: 13px;
-      color: #666;
-      text-align: center;
-      margin-bottom: 15px;
+      font-size: 12px;
+      color: #444;
+      text-align: right;
+      margin-bottom: 20px;
     }
 
     .submit-btn {
@@ -183,44 +160,44 @@
     قبل تقديم الطلب، يرجى تحويل الأموال في غضون <strong>10 دقائق</strong><br>باستخدام معلومات الدفع المحددة أدناه.
   </div>
 
-  <form class="form-content" id="transferForm">
+  <form class="form-content" id="transferForm" style="background-color: #f0f0f0; border-radius: 6px;">
     <div class="info-block">
-      <div class="info-label">رقم الحساب البنكي</div>
+      <div class="info-label">رقم الحساب البنكي:</div>
       <div class="info-input">
-        <strong class="english-numbers">10468669</strong>
-        <span class="copy-icon" onclick="copyText(this, '10468669')">
-          <img src="https://cdn-icons-png.flaticon.com/512/60/60990.png" alt="copy" />
-        </span>
-        <span class="copied-text">تم النسخ</span>
+        <input type="text" class="english-numbers" value="10468669" readonly>
       </div>
     </div>
 
     <div class="info-block">
-      <div class="info-label">الاسم الكامل للمستلم</div>
+      <div class="info-label">الاسم الكامل لصاحب الحساب البنكي:</div>
       <div class="info-input">
-        <strong>M'hamed SRV</strong>
-        <span class="copy-icon" onclick="copyText(this, 'M\'hamed SRV')">
-          <img src="https://cdn-icons-png.flaticon.com/512/60/60990.png" alt="copy" />
-        </span>
-        <span class="copied-text">تم النسخ</span>
+        <input type="text" value="M'hamed SRV" readonly>
       </div>
     </div>
 
     <div class="info-block">
-      <div class="info-label">سبب التحويل</div>
+      <div class="info-label">سبب التحويل:</div>
       <div class="info-input">
-        <strong class="english-numbers">srv</strong>
-        <span class="copy-icon" onclick="copyText(this, 'srv')">
-          <img src="https://cdn-icons-png.flaticon.com/512/60/60990.png" alt="copy" />
-        </span>
-        <span class="copied-text">تم النسخ</span>
+        <input type="text" value="srv" readonly>
       </div>
     </div>
 
+    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+      <label style="font-size: 14px; color: #333;">تنبيه، الرجاء تحميل لقطة شاشة للحوالة المصرفية الناجحة:</label>
+      <div class="upload-section">
+        <label for="proof">+</label>
+        <input type="file" id="proof" name="proof" accept=".jpg,.jpeg,.png,.pdf" required>
+      </div>
+    </div>
+
+    <div class="note">
+      (.jpg, .jpeg, .png, .pdf. الحجم الأقصى للملف هو 20 ميغا بايت)<br>
+      (.jpg, .jpeg, .png, .pdf. La taille maximale du fichier est de 20 Mo)
+    </div>
     <div class="info-block">
-      <div class="info-label">المبلغ (الحد اﻷدنى 100.00 MAD / الحد الأقصى 5 000.00 MAD)</div>
+      <div class="info-label">المبلغ (الحد الأدنى 100.00 MAD / الحد الأقصى 5 000.00 MAD)</div>
       <div class="info-input">
-        <input type="number" name="amount" class="english-numbers" min="200" max="5000" placeholder="200.00" required>
+        <input type="number" name="amount" class="english-numbers" min="100" max="5000" placeholder="200.00" required>
       </div>
     </div>
 
@@ -231,18 +208,9 @@
       </div>
     </div>
 
-    <div class="info-block" style="flex-direction: column; align-items: flex-start;">
-      <span style="margin-bottom: 10px;">تنبيه, الرجاء تحميل لقطة شاشة للحوالة المصرفية الناجحة:</span>
-      <div class="upload-wrapper">
-        <img id="preview" class="preview-image" />
-        <div class="upload-section">
-          <label for="proof">+</label>
-          <input type="file" id="proof" name="proof" accept=".jpg,.jpeg,.png" required>
-        </div>
-      </div>
+    <div class="info-block" style="justify-content: flex-start; margin-bottom: 15px;">
+      <img id="preview" class="preview-image" style="width: 60px; height: 60px; object-fit: cover; border: 1px solid #ccc; display: none;" />
     </div>
-
-    <div class="note">(.jpg, .jpeg, .png, .pdf. الحجم الأقصى للملف هو 20 ميغا بايت)</div>
 
     <button type="submit" class="submit-btn">التأكيد</button>
   </form>
@@ -250,28 +218,6 @@
 
 <input type="text" id="hiddenCopyInput" style="position:absolute;top:-9999px;left:-9999px;" readonly />
 <script>
-  function copyText(element, value) {
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(value).then(() => {
-        const msg = element.nextElementSibling;
-        msg.style.display = 'inline';
-        setTimeout(() => msg.style.display = 'none', 1200);
-      }).catch(() => fallbackCopy(element, value));
-    } else {
-      fallbackCopy(element, value);
-    }
-  }
-
-  function fallbackCopy(element, value) {
-    const input = document.getElementById('hiddenCopyInput');
-    input.value = value;
-    input.select();
-    document.execCommand('copy');
-    const msg = element.nextElementSibling;
-    msg.style.display = 'inline';
-    setTimeout(() => msg.style.display = 'none', 1200);
-  }
-
   function resizeImage(file, maxWidth = 800, maxHeight = 800) {
     return new Promise((resolve, reject) => {
       const img = new Image();
