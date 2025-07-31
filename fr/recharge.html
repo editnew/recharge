@@ -43,6 +43,7 @@
       -webkit-user-drag: none;
       -webkit-touch-callout: none;
     }
+    .dropdown-item img { display: none; }
   </style>
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 min-h-screen flex items-center justify-center px-4">
@@ -65,19 +66,19 @@
         </button>
         <ul id="dropdownList" class="absolute z-10 w-full bg-white dark:bg-gray-700 border rounded-xl mt-1 hidden max-h-60 overflow-y-auto text-sm text-gray-800 dark:text-white">
           <li class="dropdown-item px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer flex items-center justify-between" data-value="Mega pari">
-            Mega pari <img src="https://i.postimg.cc/vTykb7Kw/recharge.jpg" class="w-6 h-6 rounded-full" />
+            <span>Mega pari</span> <img src="https://i.postimg.cc/vTykb7Kw/recharge.jpg" class="w-6 h-6 rounded-full" />
           </li>
           <li class="dropdown-item px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer flex items-center justify-between" data-value="Linbet">
-            Linbet <img src="https://i.postimg.cc/xCgWJjwv/recharge.jpg" class="w-6 h-6 rounded-full" />
+            <span>Linbet</span> <img src="https://i.postimg.cc/xCgWJjwv/recharge.jpg" class="w-6 h-6 rounded-full" />
           </li>
           <li class="dropdown-item px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer flex items-center justify-between" data-value="Gooobet">
-            Gooobet <img src="https://i.postimg.cc/L63Y9Hnc/recharge.jpg" class="w-6 h-6 rounded-full" />
+            <span>Gooobet</span> <img src="https://i.postimg.cc/L63Y9Hnc/recharge.jpg" class="w-6 h-6 rounded-full" />
           </li>
           <li class="dropdown-item px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer flex items-center justify-between" data-value="1xbet">
-            1xbet <img src="https://i.postimg.cc/g277nb7D/recharge.jpg" class="w-6 h-6 rounded-full" />
+            <span>1xbet</span> <img src="https://i.postimg.cc/g277nb7D/recharge.jpg" class="w-6 h-6 rounded-full" />
           </li>
           <li class="dropdown-item px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer flex items-center justify-between" data-value="Melbet">
-            Melbet <img src="https://i.postimg.cc/0jZWvTm7/recharge.jpg" class="w-6 h-6 rounded-full" />
+            <span>Melbet</span> <img src="https://i.postimg.cc/0jZWvTm7/recharge.jpg" class="w-6 h-6 rounded-full" />
           </li>
         </ul>
         <input type="hidden" id="platform" name="platform" />
@@ -207,8 +208,8 @@
       const value = item.getAttribute("data-value");
       platformInput.value = value;
       dropdownList.classList.add("hidden");
-      const img = item.querySelector("img").outerHTML;
-      selectedText.innerHTML = `<span>${value}</span>${img}`;
+      const img = item.querySelector("img").getAttribute("src");
+      selectedText.innerHTML = `<span>${value}</span><img src="${img}" class="w-6 h-6 rounded-full ml-2" />`;
     });
   });
 
@@ -226,8 +227,8 @@
       const item = [...document.querySelectorAll(".dropdown-item")].find(i => i.dataset.value === storedPlatform);
       if (item) {
         platformInput.value = storedPlatform;
-        const img = item.querySelector("img").outerHTML;
-        selectedText.innerHTML = `<span>${storedPlatform}</span>${img}`;
+        const img = item.querySelector("img").getAttribute("src");
+        selectedText.innerHTML = `<span>${storedPlatform}</span><img src="${img}" class="w-6 h-6 rounded-full ml-2" />`;
       } else {
         platformInput.value = "";
         selectedText.textContent = "اختر المنصة";
