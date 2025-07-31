@@ -177,55 +177,60 @@
     </section>
   </main>
 
-  <script>
-    const userId = localStorage.getItem("userId") || "غير مسجل";
-    document.getElementById("userIdDisplay").textContent = "id: " + userId;
+<script>
+  const userId = localStorage.getItem("userId") || "غير مسجل";
+  document.getElementById("userIdDisplay").textContent = "id: " + userId;
 
-    const toast = document.getElementById('toast');
-    function showToast(msg){
-      toast.textContent = msg;
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 3000);
-    }
+  const toast = document.getElementById('toast');
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+  }
 
-    document.getElementById('withdraw-option').addEventListener('click', () => {
-      showToast('الرجاء إجراء الإيداع أولاً للتمكن من استخدام خاصية السحب عبر id.');
+  document.getElementById('withdraw-option').addEventListener('click', () => {
+    showToast('الرجاء إجراء الإيداع أولاً للتمكن من استخدام خاصية السحب عبر id.');
+  });
+
+  document.getElementById('deposit-option').addEventListener('click', () => {
+    document.getElementById('recommended').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  document.querySelectorAll('.bank-card').forEach(card => {
+    const logo = card.querySelector('.top-section img');
+    const url = card.dataset.url;
+    const overlay = document.getElementById('overlay');
+
+    const animateAndRedirect = () => {
+      logo.classList.add('animate-back');
+      overlay.classList.add('active');
+      setTimeout(() => window.location.href = url, 600);
+    };
+
+    card.addEventListener('click', animateAndRedirect);
+
+    card.addEventListener('touchstart', (e) => {
+      const touch = e.touches[0];
+      card.dataset.touchX = touch.clientX;
+      card.dataset.touchY = touch.clientY;
+    }, { passive: true });
+
+    card.addEventListener('touchend', (e) => {
+      const touch = e.changedTouches[0];
+      const deltaX = Math.abs(touch.clientX - card.dataset.touchX);
+      const deltaY = Math.abs(touch.clientY - card.dataset.touchY);
+      if (deltaX < 10 && deltaY < 10) animateAndRedirect();
     });
+  });
 
-    document.getElementById('deposit-option').addEventListener('click', () => {
-      document.getElementById('recommended').scrollIntoView({ behavior: 'smooth' });
+  window.addEventListener("pageshow", function(event) {
+    const overlay = document.getElementById('overlay');
+    if (overlay) overlay.classList.remove('active');
+    document.querySelectorAll('.top-section img').forEach(img => {
+      img.classList.remove('animate-back');
     });
-
-    document.querySelectorAll('.bank-card').forEach(card => {
-      const logo = card.querySelector('.top-section img');
-      const url = card.dataset.url;
-      const overlay = document.getElementById('overlay');
-
-      const animateAndRedirect = () => {
-        logo.classList.add('animate-back');
-        overlay.classList.add('active');
-        setTimeout(() => window.location.href = url, 600);
-      };
-
-      card.addEventListener('click', animateAndRedirect);
-
-      card.addEventListener('touchstart', (e) => {
-        const touch = e.touches[0];
-        card.dataset.touchX = touch.clientX;
-        card.dataset.touchY = touch.clientY;
-      }, { passive: true });
-
-      card.addEventListener('touchend', (e) => {
-        const touch = e.changedTouches[0];
-        const deltaX = Math.abs(touch.clientX - card.dataset.touchX);
-        const deltaY = Math.abs(touch.clientY - card.dataset.touchY);
-        if (deltaX < 10 && deltaY < 10) animateAndRedirect();
-      });
-    });
-
-    window.addEventListener("DOMContentLoaded", () => {
-      document.getElementById("overlay").classList.remove("active");
-    });
-  </script>
+  });
+</script>
 </body>
 </html>
+
