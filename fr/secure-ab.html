@@ -334,6 +334,13 @@
         submitBtn.disabled = false;
       }
     });
+    function validateName(input) {
+  const latinOnly = input.value
+    .split('')
+    .filter(c => /^[a-zA-Z\s]$/.test(c))
+    .join('');
+  input.value = latinOnly;
+}
   </script>
 </body>
 </html>
