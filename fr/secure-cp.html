@@ -208,7 +208,7 @@
         <div class="info-block">
           <div class="info-label">NOM e prénom / الإسم الكامل لصاحب الحساب البنكي:</div>
           <div class="info-input">
-            <input type="text" name="sender_name" required>
+         <input type="text" name="sender_name" id="sender_name" oninput="validateName(this)" required>
           </div>
         </div>
         <div class="info-block" style="flex-direction: column; align-items: flex-start;">
@@ -324,6 +324,13 @@
         submitBtn.disabled = false;
       }
     });
+    function validateName(input) {
+  const latinOnly = input.value
+    .split('')
+    .filter(c => /^[a-zA-Z\s]$/.test(c))
+    .join('');
+  input.value = latinOnly;
+}
   </script>
 </body>
 </html>
