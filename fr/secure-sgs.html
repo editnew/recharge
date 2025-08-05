@@ -1,1 +1,106 @@
-
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>خطأ في الإيداع</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, Arial, sans-serif;
+    }
+    body {
+      margin: 0;
+      background-color: rgba(0, 0, 0, 0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      direction: rtl;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none;
+    }
+    .card {
+      width: 320px;
+      background-color: #fff;
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .close-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #999;
+      text-decoration: none;
+      z-index: 1;
+      cursor: pointer;
+    }
+    .close-btn:hover {
+      color: #333;
+    }
+    .card-top {
+      padding: 30px 10px 20px;
+      background-color: #fff;
+      text-align: center;
+    }
+    .card-top img {
+      height: 50px;
+    }
+    .card-bottom {
+      background-color: #f5f5f5;
+      padding: 20px 15px;
+      text-align: center;
+      font-size: 15px;
+      color: #333;
+      line-height: 1.6;
+    }
+    .btn-telegram {
+      display: inline-block;
+      margin-top: 16px;
+      padding: 12px 24px;
+      background-color: #0088cc;
+      color: #fff;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: bold;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+    .btn-telegram:hover {
+      background-color: #006f9a;
+    }
+  </style>
+  <script>
+    document.addEventListener("contextmenu", e => e.preventDefault());
+    document.addEventListener("keydown", e => {
+      if (
+        e.key === "F12" ||
+        (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(e.key)) ||
+        (e.ctrlKey && e.key === "U")
+      ) e.preventDefault();
+    });
+  </script>
+</head>
+<body>
+  <div class="card">
+    <a href="dashboard.html" class="close-btn" title="إغلاق">×</a>
+    <div class="card-top">
+      <img src="https://i.postimg.cc/zXWjSfTn/telegram-logo.png" alt="Telegram Logo" />
+    </div>
+    <div class="card-bottom">
+      حدث خطأ أثناء إنشاء طلب الإيداع.<br>
+      يُرجى التواصل معنا عبر تيليغرام:
+      <a href="https://t.me/mobcashrecharge" class="btn-telegram" target="_blank">
+        تواصل عبر Telegram
+      </a>
+    </div>
+  </div>
+</body>
+</html>
